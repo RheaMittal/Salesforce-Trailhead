@@ -6,10 +6,17 @@
   <title>Designing Adaptive Engagement — IUI × Salesforce Trailhead</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <!--
+    Fonts:
+    · Montserrat  → headings / titles (as requested)
+    · Josefin Sans → body text (closest Google Fonts match to ITC Avant Garde Gothic —
+                     same geometric proportions. If you own ITC Avant Garde, add it via
+                     @font-face and replace "Josefin Sans" below.)
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Josefin+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       RESET & TOKENS
+       RESET & DESIGN TOKENS
     ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -43,12 +50,12 @@
       overflow-x: hidden;
       background: var(--white);
       color: var(--text);
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Josefin Sans', sans-serif;
       font-size: clamp(15px, 1.4vw, 17px);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
-    h1,h2,h3,h4 { font-family: 'Nunito', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
     button { cursor: pointer; border: none; font-family: inherit; background: none; }
@@ -68,15 +75,14 @@
       width: 0%; height: 3px;
       background: linear-gradient(90deg, var(--blue), var(--blue-lt), var(--sky));
       z-index: 9999;
-      transition: width 0.1s linear;
+      transition: width 0.08s linear;
     }
 
     /* ============================================================
        CHAPTER INDICATOR
     ============================================================ */
     #chapter-indicator {
-      position: fixed;
-      top: 16px; left: 50%;
+      position: fixed; top: 16px; left: 50%;
       transform: translateX(-50%);
       z-index: 9000;
       display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -92,19 +98,20 @@
       transition: var(--transition);
       white-space: nowrap; min-height: 44px; user-select: none;
       box-shadow: 0 2px 16px rgba(20,25,82,0.12);
+      font-family: 'Montserrat', sans-serif;
     }
     #chapter-pill:hover { border-color: rgba(1,118,211,0.45); box-shadow: var(--shadow); }
 
     .pill-prev, .pill-next {
       font-size: 11px; color: var(--muted);
-      font-family: 'Inter', sans-serif; font-weight: 500;
+      font-family: 'Josefin Sans', sans-serif; font-weight: 600;
       opacity: 0; transition: opacity var(--transition);
     }
     .pill-prev.visible, .pill-next.visible { opacity: 1; }
     .pill-arrow { font-size: 12px; color: var(--muted); }
 
     #pill-current {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-family: 'Montserrat', sans-serif; font-weight: 800;
       font-size: 13px; color: var(--navy);
       display: flex; align-items: center; gap: 6px;
     }
@@ -130,7 +137,7 @@
       display: flex; align-items: center; gap: 10px;
       padding: 10px 14px; border-radius: 10px; cursor: pointer;
       transition: background var(--transition);
-      font-size: 13px; font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 13px; font-family: 'Montserrat', sans-serif; font-weight: 700;
       color: var(--muted); min-height: 44px;
     }
     .chapter-menu-item:hover, .chapter-menu-item.active { background: var(--lavender); color: var(--blue); }
@@ -138,7 +145,7 @@
     .chapter-menu-item .pill-num { background: rgba(1,118,211,0.12); color: var(--blue); }
 
     /* ============================================================
-       HERO — dark navy, sky-gradient mockup area at top
+       HERO
     ============================================================ */
     #overview {
       position: relative;
@@ -148,7 +155,7 @@
       overflow: hidden;
     }
 
-    /* ── Sky area ── */
+    /* Sky gradient area */
     .hero-sky {
       width: 100%;
       background: linear-gradient(180deg, #CBE8F8 0%, #D9EEFA 55%, #B5D9F2 100%);
@@ -157,29 +164,37 @@
       position: relative; z-index: 1;
     }
 
-    /* Logo row top-right */
+    /* Logo row */
     .hero-logos {
       position: absolute; top: 18px; right: 24px;
       display: flex; align-items: center; gap: 10px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out 0.1s forwards;
     }
-    /* Replace these divs with <img> tags once you have the files */
     .logo-box {
-      height: 38px; min-width: 38px; padding: 0 6px;
+      height: 40px; min-width: 40px; padding: 0 8px;
       border-radius: 8px;
       background: rgba(20,25,82,0.08);
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-family: 'Inter', sans-serif; font-weight: 600;
+      font-size: 10px; font-family: 'Josefin Sans', sans-serif; font-weight: 600;
       color: var(--navy); text-align: center;
+      overflow: hidden;
     }
-    /* ← Drop assets/logos/iui-logo.png and assets/logos/trailhead-logo.png
-          then replace each .logo-box with:
-          <img src="assets/logos/iui-logo.png" alt="IUI" style="height:38px;width:auto;" />
-    */
-    .logo-x { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; color: var(--navy); }
+    .logo-box img { height: 32px; width: auto; object-fit: contain; }
+    .logo-x { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 16px; color: var(--navy); }
 
-    /* ── Product mockup card ── */
+    /* ── Hero mockup ── */
     .hero-mockup-wrap {
-      width: 100%; max-width: 620px; margin: 0 auto; position: relative; z-index: 2;
+      width: 100%; max-width: 640px; margin: 0 auto;
+      position: relative; z-index: 2;
+      /* Entrance: slide up from below */
+      opacity: 0;
+      transform: translateY(40px);
+      animation: mockupEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    @keyframes mockupEntrance {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-mockup-frame {
@@ -188,6 +203,11 @@
       box-shadow: 0 -4px 60px rgba(20,25,82,0.22), 0 0 0 1px rgba(20,25,82,0.06);
       overflow: hidden;
     }
+
+    /* If you have a screenshot, replace the .mockup-html-body div with:
+       <img src="assets/screenshots/hero-mockup.png" alt="Trailhead Solve"
+            style="width:100%;display:block;" />
+       and remove the mockup-chrome / mockup-nav / mockup-html-body blocks. */
 
     .mockup-chrome {
       background: #EDEFF4; padding: 9px 14px;
@@ -200,7 +220,7 @@
       flex: 1; margin-left: 8px; background: #fff; border-radius: 5px;
       height: 20px; padding: 0 10px;
       display: flex; align-items: center;
-      font-size: 10px; color: var(--muted); font-family: 'Inter', sans-serif;
+      font-size: 10px; color: var(--muted); font-family: 'Josefin Sans', sans-serif;
     }
 
     .mockup-nav {
@@ -208,82 +228,110 @@
       display: flex; align-items: center; gap: 14px; background: #fff;
     }
     .mockup-nav-brand {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: 13px; color: var(--navy);
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 13px; color: var(--navy);
     }
     .mockup-nav-links { display: flex; gap: 12px; margin-left: auto; }
-    .mockup-nav-link { font-size: 10px; color: var(--muted); font-family: 'Inter', sans-serif; }
+    .mockup-nav-link { font-size: 10px; color: var(--muted); font-family: 'Josefin Sans', sans-serif; letter-spacing: 0.03em; }
 
-    .mockup-body { padding: 24px 28px 20px; background: #fff; }
+    .mockup-html-body { padding: 28px 32px 24px; background: #fff; }
 
     .mockup-greeting {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(22px, 4vw, 36px);
-      color: var(--navy); text-align: center; margin-bottom: 18px;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: clamp(26px, 5vw, 48px);
+      color: var(--navy); text-align: center; margin-bottom: 20px;
+      letter-spacing: -0.5px;
+      /* Each letter animates in */
+      animation: greetingReveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+    }
+    @keyframes greetingReveal {
+      from { opacity: 0; filter: blur(4px); transform: translateY(8px); }
+      to   { opacity: 1; filter: blur(0); transform: translateY(0); }
     }
 
     .mockup-search-bar {
       background: #F5F7FA; border: 1px solid #DDE2EC;
-      border-radius: 12px; padding: 14px 16px; margin-bottom: 12px;
+      border-radius: 14px; padding: 16px 18px; margin-bottom: 14px;
+      animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.95s both;
     }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .mockup-search-text {
-      font-size: 12px; color: #9096a1; font-family: 'Inter', sans-serif; line-height: 1.5;
+      font-size: 13px; color: #9096a1; font-family: 'Josefin Sans', sans-serif;
+      line-height: 1.5; letter-spacing: 0.01em;
     }
     .mockup-search-row {
-      display: flex; align-items: center; justify-content: space-between; margin-top: 10px;
+      display: flex; align-items: center; justify-content: space-between; margin-top: 12px;
     }
     .mockup-icon-btn {
-      width: 26px; height: 26px; border-radius: 50%;
+      width: 28px; height: 28px; border-radius: 50%;
       background: #EDEFF4; display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition);
     }
+    .mockup-icon-btn:hover { background: #DDE2EC; }
+
     .mockup-cta-btn {
       display: inline-flex; align-items: center; gap: 6px;
       background: linear-gradient(135deg, #0176d3, #1B96FF);
-      color: #fff; font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 11px; padding: 7px 14px; border-radius: var(--radius-pill);
+      color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: 12px; padding: 9px 18px; border-radius: var(--radius-pill);
+      border: none; cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 14px rgba(1,118,211,0.35);
+      animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) 1.1s both;
     }
+    .mockup-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(1,118,211,0.45); }
 
-    /* ── Wave divider between sky and dark ── */
+    /* ── Wave ── */
     .hero-wave {
       width: 100%; display: block; line-height: 0;
       position: relative; z-index: 2; margin-top: -2px;
+      animation: fadeIn 0.5s ease-out 0.4s both;
     }
 
-    /* ── Dark content area ── */
+    /* ── Dark content ── */
     .hero-dark {
       width: 100%; position: relative; z-index: 1;
       display: flex; flex-direction: column; align-items: center; text-align: center;
-      padding: 44px 24px 100px;
+      padding: 48px 24px 110px;
     }
 
     .hero-tag {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.10em;
-      text-transform: uppercase; color: rgba(255,255,255,0.45);
-      margin-bottom: 18px; font-family: 'Inter', sans-serif;
+      font-family: 'Josefin Sans', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-bottom: 18px;
+      opacity: 0; animation: fadeUp 0.6s ease-out 0.6s forwards;
     }
 
     .hero-h1 {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(30px, 5vw, 58px); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: clamp(28px, 5vw, 56px); color: #fff;
       line-height: 1.1; max-width: 820px; margin-bottom: 20px;
+      letter-spacing: -0.5px;
+      opacity: 0; animation: fadeUp 0.7s ease-out 0.75s forwards;
     }
 
     .hero-team {
-      font-size: 13px; color: rgba(255,255,255,0.45);
-      margin-bottom: 32px; line-height: 1.7;
+      font-family: 'Josefin Sans', sans-serif; font-size: 13px; letter-spacing: 0.03em;
+      color: rgba(255,255,255,0.42); margin-bottom: 32px; line-height: 1.8;
+      opacity: 0; animation: fadeUp 0.6s ease-out 0.9s forwards;
     }
 
     .hero-cta {
       display: inline-flex; align-items: center; gap: 8px;
       background: #fff; color: var(--navy);
-      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 15px;
-      padding: 13px 28px; border-radius: var(--radius-pill);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.22); transition: var(--transition);
+      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px;
+      padding: 14px 28px; border-radius: var(--radius-pill);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
       min-height: 44px;
+      opacity: 0; animation: fadeUp 0.6s ease-out 1.05s forwards;
     }
-    .hero-cta:hover { background: var(--lavender); transform: translateY(-2px); }
+    .hero-cta:hover { background: var(--lavender); transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.3); }
 
-    /* Mountain SVG at bottom of hero */
+    /* Mountain silhouette */
     .hero-mountains {
       position: absolute; bottom: 0; left: 0; right: 0;
       height: 130px; pointer-events: none; z-index: 0;
@@ -292,34 +340,19 @@
     .scroll-chevron {
       position: absolute; bottom: 24px; left: 50%;
       transform: translateX(-50%); z-index: 2;
-      color: rgba(255,255,255,0.35); animation: bounce 2s ease-in-out infinite;
+      color: rgba(255,255,255,0.35);
+      opacity: 0; animation: fadeUp 0.5s ease-out 1.3s forwards, bounce 2s ease-in-out 1.8s infinite;
     }
 
-    @keyframes bounce {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50%      { transform: translateX(-50%) translateY(8px); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-tag  { animation: fadeUp 0.6s ease-out 0.1s both; }
-    .hero-h1   { animation: fadeUp 0.7s ease-out 0.24s both; }
-    .hero-team { animation: fadeUp 0.6s ease-out 0.38s both; }
-    .hero-cta  { animation: fadeUp 0.6s ease-out 0.50s both; }
-    .scroll-chevron { animation: fadeUp 0.6s ease-out 0.62s both, bounce 2s ease-in-out 1.2s infinite; }
-
-    /* Mascot placeholder in hero (bottom corners) */
-    /* ← Replace with <img src="assets/mascots/trailblazer-single.png"> once ready */
+    @keyframes bounce   { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
 
     /* ============================================================
        PROJECT META BAR
     ============================================================ */
     .meta-bar {
-      background: #FAFBFF;
-      border-bottom: 1px solid var(--border);
-      padding: 28px 24px;
+      background: #FAFBFF; border-bottom: 1px solid var(--border); padding: 28px 24px;
     }
     .meta-grid {
       display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
@@ -327,80 +360,70 @@
     }
     .meta-item { display: flex; flex-direction: column; gap: 4px; }
     .meta-lbl {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted); font-family: 'Inter', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); font-family: 'Josefin Sans', sans-serif;
     }
     .meta-val {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 14px; color: var(--navy);
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: var(--navy);
     }
 
     /* ============================================================
-       ABOUT — What is Trailhead + Project Description
+       ABOUT
     ============================================================ */
-    #about {
-      background: #fff;
-      padding: 80px 0;
-      position: relative; overflow: hidden;
-    }
+    #about { background: #fff; padding: 80px 0; position: relative; overflow: hidden; }
 
     .about-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;
     }
-
-    .acard {
-      border-radius: var(--radius-lg); padding: 36px;
-    }
-    .acard-lav { background: var(--lavender); }
+    .acard { border-radius: var(--radius-lg); padding: 36px; }
+    .acard-lav  { background: var(--lavender); }
     .acard-navy { background: var(--navy); }
 
     .acard-title {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: clamp(20px, 2.5vw, 26px); margin-bottom: 14px;
     }
-    .acard-lav .acard-title  { color: var(--purple); }
+    .acard-lav  .acard-title { color: var(--purple); }
     .acard-navy .acard-title { color: #fff; }
-    .acard-lav p  { color: var(--text); font-size: 15px; line-height: 1.7; }
-    .acard-navy p { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.7; }
+    .acard-lav  p { color: var(--text); font-size: 15px; line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
+    .acard-navy p { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
 
-    /* Mascot row */
+    /* Hover lift on about cards */
+    .acard {
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .acard:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
     .mascot-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
     .mascot-ph {
-      background: var(--lavender);
-      border-radius: var(--radius-lg);
+      background: var(--lavender); border-radius: var(--radius-lg);
       aspect-ratio: 4/3;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 10px;
-      border: 2px dashed rgba(50,29,113,0.14);
+      gap: 10px; border: 2px dashed rgba(50,29,113,0.14);
       color: var(--purple); font-size: 12px;
-      font-family: 'Inter', sans-serif; text-align: center; padding: 20px;
+      font-family: 'Josefin Sans', sans-serif; text-align: center; padding: 20px;
+      overflow: hidden; position: relative;
     }
+    /* If an image is provided, it fills the placeholder */
+    .mascot-ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
     .mascot-ph-icon { font-size: 36px; }
+    .mascot-ph-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
 
-    /* Mountain bg watermark */
-    .section-mountain {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      pointer-events: none; opacity: 0.05;
-    }
+    .section-mountain { position: absolute; bottom: 0; left: 0; right: 0; pointer-events: none; opacity: 0.05; }
 
     /* ============================================================
-       PROBLEM / RESEARCH
+       RESEARCH / PROBLEM
     ============================================================ */
-    #research {
-      background: #fff;
-      padding: 80px 0 100px;
-      border-top: 1px solid var(--border);
-    }
+    #research { background: #fff; padding: 80px 0 100px; border-top: 1px solid var(--border); }
 
     .problem-lede {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: clamp(26px, 3.8vw, 44px);
       color: var(--text); line-height: 1.2; max-width: 680px; margin-bottom: 8px;
     }
     .problem-sub {
       font-size: 15px; color: var(--muted); max-width: 520px;
-      margin-bottom: 48px; line-height: 1.6;
+      margin-bottom: 48px; line-height: 1.6; font-family: 'Josefin Sans', sans-serif;
     }
 
     /* Engagement graph */
@@ -410,45 +433,43 @@
       display: flex; flex-direction: column; align-items: center;
     }
     .graph-card-title {
-      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); font-family: 'Josefin Sans', sans-serif; font-weight: 600;
       margin-bottom: 20px; align-self: flex-start;
     }
     .graph-svg { width: 100%; max-width: 560px; }
 
-    /* Findings */
+    /* Donut charts */
     .findings-lede {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: clamp(17px, 2vw, 22px);
-      color: var(--text); margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: clamp(17px, 2vw, 22px); color: var(--text); margin-bottom: 20px;
     }
 
-    /* Donut grid */
-    .donut-grid {
-      display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 48px;
-    }
+    .donut-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 48px; }
+
     .donut-card {
       background: var(--gray-bg); border-radius: var(--radius-lg);
       padding: 22px; display: flex; align-items: center; gap: 18px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
     }
+    .donut-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
     .donut-ring {
       width: 82px; height: 82px; border-radius: 50%;
       display: grid; place-items: center; position: relative; flex-shrink: 0;
+      /* JS sets background via style.background after animation */
+      background: conic-gradient(var(--navy) 0%, #CBD5E1 0%);
+      transition: box-shadow 0.3s ease;
     }
     .donut-ring::after {
       content: ''; position: absolute;
-      width: 60px; height: 60px; border-radius: 50%;
-      background: var(--gray-bg);
+      width: 60px; height: 60px; border-radius: 50%; background: var(--gray-bg);
     }
     .donut-pct {
       position: relative; z-index: 1;
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: 16px; color: var(--navy);
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 15px; color: var(--navy);
     }
-    .d64 { background: conic-gradient(var(--navy) 0% 64%, #CBD5E1 64% 100%); }
-    .d45 { background: conic-gradient(var(--navy) 0% 45%, #CBD5E1 45% 100%); }
-    .d36 { background: conic-gradient(var(--navy) 0% 36%, #CBD5E1 36% 100%); }
-    .donut-desc { font-size: 14px; color: var(--text); line-height: 1.5; }
+    .donut-desc { font-size: 14px; color: var(--text); line-height: 1.55; font-family: 'Josefin Sans', sans-serif; }
 
     /* Stats bar */
     .stats-bar {
@@ -456,48 +477,41 @@
       border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
     }
     .stat-blk {
-      padding: 32px 24px; text-align: center;
-      border-right: 1px solid var(--border);
+      padding: 32px 24px; text-align: center; border-right: 1px solid var(--border);
+      position: relative;
     }
     .stat-blk:last-child { border-right: none; }
     .stat-n {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: clamp(52px, 8vw, 88px); color: var(--navy);
       line-height: 1; display: block;
     }
-    .stat-d { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+    .stat-d { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.4; font-family: 'Josefin Sans', sans-serif; }
 
     /* ============================================================
-       HMW — dark navy wave section
+       INSIGHTS / HMW (dark navy)
     ============================================================ */
-    #insights {
-      background: var(--navy);
-      padding: 90px 0 100px;
-      position: relative;
-    }
+    #insights { background: var(--navy); padding: 90px 0 100px; position: relative; }
 
     .hmw-q {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(24px, 4vw, 46px);
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: clamp(22px, 3.8vw, 44px);
       color: #fff; line-height: 1.25;
       max-width: 820px; margin: 0 auto 64px;
       text-align: center; font-style: italic;
     }
 
-    .insight-grid {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
-    }
+    .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
     .i-card {
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.11);
       border-radius: var(--radius); padding: 22px;
+      transition: background var(--transition), border-color var(--transition), transform 0.3s ease;
     }
+    .i-card:hover { background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.22); transform: translateY(-3px); }
     .i-card-icon { font-size: 22px; margin-bottom: 10px; }
-    .i-card-title {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 15px; color: #fff; margin-bottom: 8px;
-    }
-    .i-card-text { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.6; font-style: italic; }
+    .i-card-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px; color: #fff; margin-bottom: 8px; }
+    .i-card-text { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.6; font-style: italic; font-family: 'Josefin Sans', sans-serif; }
 
     /* ============================================================
        IDEATION
@@ -505,136 +519,162 @@
     #ideation { background: #fff; padding: 80px 0; }
 
     .s-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--blue);
-      margin-bottom: 10px; font-family: 'Inter', sans-serif;
+      margin-bottom: 10px; font-family: 'Josefin Sans', sans-serif;
     }
     .s-h2 {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: clamp(26px, 3.8vw, 42px); color: var(--purple); margin-bottom: 14px;
     }
     .s-body {
       max-width: 640px; color: var(--muted); font-size: 15px;
-      line-height: 1.7; margin-bottom: 40px;
+      line-height: 1.7; margin-bottom: 40px; font-family: 'Josefin Sans', sans-serif;
     }
 
-    /* Ideation photo gallery */
-    .ideation-gallery {
-      max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr; gap: 12px;
-    }
-    .ig-main {
-      width: 100%; aspect-ratio: 16/9;
-      border-radius: var(--radius-lg); overflow: hidden; background: var(--lavender);
-    }
-    .ig-main img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .ideation-gallery { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .ig-main { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-lg); overflow: hidden; background: var(--lavender); }
+    .ig-main img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .ig-main:hover img { transform: scale(1.03); }
     .ig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .ig-pair-item { aspect-ratio: 4/3; border-radius: var(--radius-lg); overflow: hidden; background: var(--lavender); }
-    .ig-pair-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-    @media (min-width: 1024px) {
-      .ig-main img:hover, .ig-pair-item img:hover { transform: scale(1.02); }
-    }
-    .s-caption {
-      text-align: center; font-size: 12px; color: var(--muted);
-      margin-top: 10px; font-family: 'Inter', sans-serif;
-    }
+    .ig-pair-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .ig-pair-item:hover img { transform: scale(1.04); }
+    .s-caption { text-align: center; font-size: 12px; color: var(--muted); margin-top: 10px; font-family: 'Josefin Sans', sans-serif; letter-spacing: 0.02em; }
 
     /* ============================================================
-       SOLUTIONS — dark navy
+       SOLUTIONS — HORIZONTAL STICKY SCROLL (desktop)
     ============================================================ */
-    #solutions {
-      background: var(--navy);
-      padding: 80px 0 100px;
+
+    /* The outer wrapper defines the scroll height for the pinned section */
+    .h-scroll-outer {
       position: relative;
+      /* JS sets this height dynamically */
+      height: 400vh;
     }
 
-    .sol-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-      margin-bottom: 8px; font-family: 'Inter', sans-serif;
-    }
-    .sol-h2 {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(32px, 5vw, 60px); color: var(--orange);
-      line-height: 1.05; margin-bottom: 10px;
-    }
-    .sol-sub {
-      font-size: 15px; color: rgba(255,255,255,0.6);
-      max-width: 580px; margin-bottom: 48px; line-height: 1.65;
+    /* The sticky viewport — stays in view while scrolling through h-scroll-outer */
+    .h-scroll-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--navy);
+      display: flex;
+      align-items: stretch;
     }
 
-    /* Feature cards */
-    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 56px; }
+    /* The track that moves horizontally */
+    .h-scroll-track {
+      display: flex;
+      align-items: stretch;
+      will-change: transform;
+    }
 
+    /* Each "slide" panel */
+    .h-slide {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 60px 48px;
+    }
+
+    /* Slide 0 — intro */
+    .h-slide-intro { flex-direction: column; justify-content: center; text-align: center; background: var(--navy); }
+
+    .sol-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; font-family: 'Josefin Sans', sans-serif; }
+    .sol-h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(36px, 5.5vw, 68px); color: var(--orange); line-height: 1.0; margin-bottom: 12px; }
+    .sol-sub { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 560px; margin: 0 auto 40px; line-height: 1.65; font-family: 'Josefin Sans', sans-serif; }
+
+    .scroll-hint {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-family: 'Josefin Sans', sans-serif; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      animation: hintPulse 2s ease-in-out infinite;
+    }
+    @keyframes hintPulse { 0%,100%{opacity:0.35;transform:translateX(0)} 50%{opacity:0.7;transform:translateX(6px)} }
+
+    /* Slides 1 & 2 — feature cards */
+    .h-slide-feat { gap: 40px; justify-content: center; }
+    .h-slide-feat .feat-inner { max-width: 880px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+
+    /* Slide 3 — how it works */
+    .h-slide-how { flex-direction: column; justify-content: center; }
+
+    /* Feature card */
     .feat-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11);
       border-radius: var(--radius-lg); padding: 28px;
+      transition: background var(--transition), border-color var(--transition), transform 0.3s ease;
     }
+    .feat-card:hover { background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.22); transform: translateY(-4px); }
 
-    .feat-num-row {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
-    }
+    .feat-num-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
     .feat-badge {
       width: 30px; height: 30px; border-radius: 50%;
       background: rgba(255,255,255,0.10);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 14px; color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 14px; color: #fff;
     }
-    .feat-num-lbl { font-size: 12px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif; }
+    .feat-num-lbl { font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'Josefin Sans', sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .feat-name { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(20px, 2.5vw, 26px); color: #fff; margin-bottom: 6px; }
+    .feat-tagline { font-size: 13px; color: var(--sky); font-style: italic; margin-bottom: 12px; font-family: 'Josefin Sans', sans-serif; }
+    .feat-desc { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
 
-    .feat-name {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(20px, 2.5vw, 26px); color: #fff; margin-bottom: 6px;
-    }
-    .feat-tagline { font-size: 13px; color: var(--sky); font-style: italic; margin-bottom: 12px; }
-    .feat-desc { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.7; }
-
-    /*
-      PRODUCT SCREENSHOT PLACEHOLDERS
-      ─────────────────────────────────
-      Drop your screenshots into assets/screenshots/ then replace each
-      .scr-ph div with:
-        <img src="assets/screenshots/trailhead-solve.png"
-             alt="Trailhead Solve interface" style="width:100%;border-radius:12px;" />
-    */
+    /* Screenshot placeholder — swap with <img> when ready */
     .scr-ph {
       aspect-ratio: 16/9; margin-top: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 2px dashed rgba(255,255,255,0.13);
+      background: rgba(255,255,255,0.04); border: 2px dashed rgba(255,255,255,0.13);
       border-radius: var(--radius);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 8px;
-      color: rgba(255,255,255,0.3); font-size: 12px;
-      font-family: 'Inter', sans-serif; text-align: center; padding: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      color: rgba(255,255,255,0.3); font-size: 12px; font-family: 'Josefin Sans', sans-serif; text-align: center; padding: 16px;
+      overflow: hidden; position: relative;
     }
+    .scr-ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: calc(var(--radius) - 2px); }
     .scr-ph-icon { font-size: 26px; }
 
     /* How does it work */
-    .how-wrap {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: var(--radius-lg); padding: 36px;
-    }
-    .how-h {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(20px, 2.5vw, 26px); color: #fff; margin-bottom: 22px;
-    }
+    .how-wrap { max-width: 760px; width: 100%; }
+    .how-h { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(20px, 2.5vw, 28px); color: #fff; margin-bottom: 22px; }
     .how-steps { display: flex; flex-direction: column; gap: 12px; }
     .how-step {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.10);
       border-radius: var(--radius); padding: 18px 22px;
       display: flex; align-items: flex-start; gap: 14px;
+      transition: background var(--transition), transform 0.3s ease;
     }
+    .how-step:hover { background: rgba(255,255,255,0.12); transform: translateX(4px); }
     .step-badge {
       width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
       background: var(--navy); border: 2px solid rgba(255,255,255,0.25);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 13px; color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 13px; color: #fff;
     }
-    .step-txt { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.6; }
-    .step-txt strong { color: #fff; }
+    .step-txt { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.6; font-family: 'Josefin Sans', sans-serif; }
+    .step-txt strong { color: #fff; font-weight: 700; }
+
+    /* Progress dots for horizontal scroll */
+    .h-progress-dots {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 10;
+    }
+    .h-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.25); transition: background 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+    .h-dot.active { background: #fff; transform: scale(1.3); }
+
+    /* Mobile fallback for solutions (shown instead of horizontal scroll) */
+    .solutions-mobile {
+      display: none;
+      background: var(--navy);
+      padding: 80px 0;
+    }
+    .solutions-mobile .feat-card { margin-bottom: 20px; }
 
     /* ============================================================
        TESTING
@@ -642,50 +682,40 @@
     #testing { background: #fff; padding: 80px 0; border-top: 1px solid var(--border); }
 
     .eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 36px; }
-
     .eval-card {
       background: var(--gray-bg); border-radius: var(--radius-lg); padding: 28px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
     }
+    .eval-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
     .eval-badge-tag {
-      display: inline-block; font-size: 11px; font-weight: 500;
+      display: inline-block; font-size: 11px; font-weight: 600;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--blue); background: #EEF5FE;
       border-radius: var(--radius-pill); padding: 3px 12px;
-      margin-bottom: 10px; font-family: 'Inter', sans-serif;
+      margin-bottom: 10px; font-family: 'Josefin Sans', sans-serif;
     }
-    .eval-card h3 {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 18px; color: var(--navy); margin-bottom: 10px;
-    }
-    .eval-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .eval-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px; color: var(--navy); margin-bottom: 10px; }
+    .eval-card p { font-size: 14px; color: var(--muted); line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
 
     .results-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
     .res-card {
       background: var(--gray-bg); border-radius: var(--radius-lg); padding: 24px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
     }
-    .res-num {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(34px, 5vw, 50px); color: var(--blue);
-      line-height: 1; margin-bottom: 6px;
-    }
-    .res-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .res-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .res-num { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(34px, 5vw, 50px); color: var(--blue); line-height: 1; margin-bottom: 6px; }
+    .res-desc { font-size: 13px; color: var(--muted); line-height: 1.5; font-family: 'Josefin Sans', sans-serif; }
 
-    /* Next steps */
     .next-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
     .next-card {
       background: var(--gray-bg); border-radius: var(--radius-lg);
       padding: 22px; display: flex; gap: 14px; align-items: flex-start;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .next-icon {
-      width: 40px; height: 40px; border-radius: var(--radius);
-      background: var(--lavender); display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
-    }
-    .next-card h4 {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 14px; color: var(--blue); margin-bottom: 4px;
-    }
-    .next-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .next-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .next-icon { width: 40px; height: 40px; border-radius: var(--radius); background: var(--lavender); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .next-card h4 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px; color: var(--blue); margin-bottom: 4px; }
+    .next-card p { font-size: 13px; color: var(--muted); line-height: 1.55; font-family: 'Josefin Sans', sans-serif; }
 
     /* ============================================================
        REFLECTION
@@ -696,66 +726,49 @@
     .ref-card {
       background: #fff; border: 1px solid var(--border);
       border-radius: var(--radius-lg); padding: 28px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    .ref-card h3 {
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 17px; color: var(--navy); margin-bottom: 10px;
-    }
-    .ref-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .ref-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(1,118,211,0.2); }
+    .ref-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px; color: var(--navy); margin-bottom: 10px; }
+    .ref-card p { font-size: 14px; color: var(--muted); line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
 
     /* ============================================================
-       FOOTER — Connect With the Team
+       FOOTER
     ============================================================ */
-    footer {
-      background: var(--navy); padding: 60px 24px 36px;
-    }
+    footer { background: var(--navy); padding: 60px 24px 36px; }
     .footer-grid {
       max-width: 1120px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
     }
-    .footer-connect {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(24px, 3vw, 38px); color: #fff; margin-bottom: 12px;
-    }
-    .footer-team { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 2; }
+    .footer-connect { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(24px, 3vw, 38px); color: #fff; margin-bottom: 12px; }
+    .footer-team { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 2; font-family: 'Josefin Sans', sans-serif; }
     .footer-links { display: flex; gap: 18px; margin-top: 20px; flex-wrap: wrap; }
     .footer-link {
-      font-size: 13px; color: rgba(255,255,255,0.5);
-      font-family: 'Inter', sans-serif; transition: color var(--transition);
-      display: flex; align-items: center; gap: 5px;
+      font-size: 13px; color: rgba(255,255,255,0.5); font-family: 'Josefin Sans', sans-serif;
+      transition: color var(--transition); display: flex; align-items: center; gap: 5px;
     }
     .footer-link:hover { color: #fff; }
-    /*
-      QR CODE PLACEHOLDER
-      Replace .qr-ph with:
-        <img src="assets/qr-code.png" alt="QR code" style="width:140px;border-radius:12px;" />
-    */
     .qr-ph {
       width: 140px; height: 140px; flex-shrink: 0;
-      background: rgba(255,255,255,0.08);
-      border: 2px dashed rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08); border: 2px dashed rgba(255,255,255,0.2);
       border-radius: var(--radius);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 8px;
-      color: rgba(255,255,255,0.35); font-size: 11px;
-      font-family: 'Inter', sans-serif; text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      color: rgba(255,255,255,0.35); font-size: 11px; font-family: 'Josefin Sans', sans-serif; text-align: center;
+      overflow: hidden;
     }
+    .qr-ph img { width: 100%; height: 100%; object-fit: cover; }
     .footer-copy {
-      text-align: center; font-size: 12px;
-      color: rgba(255,255,255,0.28); margin-top: 40px;
-      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+      text-align: center; font-size: 12px; color: rgba(255,255,255,0.28);
+      margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
       max-width: 1120px; margin-left: auto; margin-right: auto;
+      font-family: 'Josefin Sans', sans-serif; letter-spacing: 0.03em;
     }
 
     /* ============================================================
        WAVE UTILITIES
     ============================================================ */
-    .wave-to-light {
-      display: block; width: 100%; line-height: 0;
-    }
-    .wave-to-dark {
-      display: block; width: 100%; line-height: 0;
-    }
+    .wave-to-dark  { display: block; width: 100%; line-height: 0; }
+    .wave-to-light { display: block; width: 100%; line-height: 0; }
 
     /* ============================================================
        REVEAL ANIMATIONS
@@ -777,10 +790,13 @@
     /* ============================================================
        RESPONSIVE
     ============================================================ */
-    @media (max-width: 768px) {
-      .about-grid, .mascot-row, .donut-grid, .feat-grid,
-      .eval-grid, .results-grid, .ref-grid, .next-grid,
-      .insight-grid { grid-template-columns: 1fr; }
+    @media (max-width: 767px) {
+      /* Hide desktop horizontal scroll; show mobile stack */
+      .h-scroll-outer { display: none; }
+      .solutions-mobile { display: block; }
+
+      .about-grid, .mascot-row, .donut-grid, .eval-grid,
+      .results-grid, .ref-grid, .next-grid, .insight-grid { grid-template-columns: 1fr; }
 
       .stats-bar { grid-template-columns: 1fr; }
       .stat-blk { border-right: none; border-bottom: 1px solid var(--border); }
@@ -789,6 +805,11 @@
       .meta-grid { grid-template-columns: repeat(2,1fr); }
       .footer-grid { grid-template-columns: 1fr; }
       .ig-pair { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 768px) {
+      /* Hide mobile fallback on desktop */
+      .solutions-mobile { display: none; }
     }
 
     @media (min-width: 769px) and (max-width: 1023px) {
@@ -802,9 +823,7 @@
 <!-- SCROLL PROGRESS BAR -->
 <div id="progress-bar"></div>
 
-<!-- ============================================================
-     CHAPTER INDICATOR
-============================================================ -->
+<!-- CHAPTER INDICATOR -->
 <div id="chapter-indicator">
   <div id="chapter-pill" role="button" aria-label="Chapter navigation" tabindex="0" aria-expanded="false">
     <span class="pill-prev" id="pill-prev"></span>
@@ -829,18 +848,26 @@
 ============================================================ -->
 <section id="overview">
 
-  <!-- Sky area with product mockup -->
   <div class="hero-sky">
-
-    <!-- Logo row — replace .logo-box divs with actual <img> tags once you have the files
-         assets/logos/iui-logo.png  ·  assets/logos/trailhead-logo.png -->
+    <!-- Logos — swap .logo-box divs with <img> tags once files are in assets/logos/ -->
     <div class="hero-logos">
-      <div class="logo-box">IUI<br/>logo</div>
+      <div class="logo-box">
+        <!-- <img src="assets/logos/iui-logo.png" alt="IUI" /> -->
+        IUI
+      </div>
       <span class="logo-x">×</span>
-      <div class="logo-box">TH<br/>logo</div>
+      <div class="logo-box">
+        <!-- <img src="assets/logos/trailhead-logo.png" alt="Trailhead" /> -->
+        TH
+      </div>
     </div>
 
-    <!-- Product mockup -->
+    <!--
+      HERO MOCKUP
+      Once you have the screenshot ready, replace EVERYTHING inside .hero-mockup-wrap with:
+        <img src="assets/screenshots/hero-mockup.png" alt="Trailhead Solve interface"
+             style="width:100%;border-radius:18px 18px 0 0;display:block;box-shadow:0 -4px 60px rgba(20,25,82,0.22);" />
+    -->
     <div class="hero-mockup-wrap">
       <div class="hero-mockup-frame">
         <div class="mockup-chrome">
@@ -859,7 +886,7 @@
             <span class="mockup-nav-link">Credentials</span>
           </div>
         </div>
-        <div class="mockup-body">
+        <div class="mockup-html-body">
           <h2 class="mockup-greeting">How can I help, Jasmine?</h2>
           <div class="mockup-search-bar">
             <p class="mockup-search-text">Ask anything Trailhead related — learning, community, what I can do next...</p>
@@ -867,10 +894,10 @@
               <div class="mockup-icon-btn">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/></svg>
               </div>
-              <div class="mockup-cta-btn">
+              <button class="mockup-cta-btn">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1l1 3.5L10 5.5 6.5 7 6 10.5 5 7 1.5 5.5 5 4.5z" fill="white"/></svg>
                 What's my move today?
-              </div>
+              </button>
               <div class="mockup-icon-btn">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
@@ -881,12 +908,11 @@
     </div>
   </div>
 
-  <!-- Wave: sky → navy -->
+  <!-- Sky → Navy wave -->
   <svg class="hero-wave" viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M0,0 C240,72 480,24 720,48 C960,72 1200,16 1440,40 L1440,72 L0,72 Z" fill="#141952"/>
   </svg>
 
-  <!-- Dark content -->
   <div class="hero-dark">
     <p class="hero-tag">Research-driven · Product Design · AI-powered</p>
     <h1 class="hero-h1">Designing Adaptive Engagement for Evolving Learner Needs</h1>
@@ -901,32 +927,24 @@
       </svg>
     </a>
 
-    <!-- Mountain silhouette -->
     <svg class="hero-mountains" viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Far layer -->
       <polygon points="0,130 160,72 320,130" fill="#1e2680" opacity="0.5"/>
       <polygon points="260,130 440,48 620,130" fill="#1e2680" opacity="0.45"/>
       <polygon points="560,130 760,56 960,130" fill="#1e2680" opacity="0.5"/>
       <polygon points="880,130 1080,44 1280,130" fill="#1e2680" opacity="0.45"/>
       <polygon points="1200,130 1340,68 1440,130" fill="#1e2680" opacity="0.5"/>
-      <!-- Near layer -->
       <polygon points="0,130 200,86 400,130" fill="#111748"/>
       <polygon points="320,130 540,60 760,130" fill="#0e1440"/>
       <polygon points="680,130 900,72 1120,130" fill="#111748"/>
       <polygon points="1020,130 1230,80 1440,130" fill="#0e1440"/>
-      <!-- Pine trees -->
       <polygon points="60,130 68,108 76,130" fill="#0a1030"/>
       <polygon points="64,118 72,100 80,118" fill="#0a1030"/>
       <polygon points="140,130 149,104 158,130" fill="#0a1030"/>
       <polygon points="145,116 154,96 163,116" fill="#0a1030"/>
       <polygon points="380,130 389,106 398,130" fill="#0a1030"/>
-      <polygon points="385,118 394,99 403,118" fill="#0a1030"/>
       <polygon points="700,130 709,108 718,130" fill="#0a1030"/>
-      <polygon points="705,119 714,101 723,119" fill="#0a1030"/>
       <polygon points="1060,130 1070,104 1080,130" fill="#0a1030"/>
-      <polygon points="1065,116 1075,96 1085,116" fill="#0a1030"/>
       <polygon points="1340,130 1350,107 1360,130" fill="#0a1030"/>
-      <polygon points="1345,119 1355,100 1365,119" fill="#0a1030"/>
     </svg>
   </div>
 
@@ -937,67 +955,49 @@
   </div>
 </section>
 
-<!-- ============================================================
-     PROJECT META BAR
-============================================================ -->
+<!-- META BAR -->
 <div class="meta-bar">
   <div class="meta-grid">
-    <div class="meta-item reveal">
-      <span class="meta-lbl">Timeline</span>
-      <span class="meta-val">Aug 2025 – May 2026</span>
-    </div>
-    <div class="meta-item reveal stagger-1">
-      <span class="meta-lbl">Client</span>
-      <span class="meta-val">Salesforce Trailhead</span>
-    </div>
-    <div class="meta-item reveal stagger-2">
-      <span class="meta-lbl">Scope</span>
-      <span class="meta-val">End-to-End Product Design</span>
-    </div>
-    <div class="meta-item reveal stagger-3">
-      <span class="meta-lbl">About the Project</span>
-      <span class="meta-val">Increasing engagement for power users who've completed their learning journey</span>
-    </div>
+    <div class="meta-item reveal"><span class="meta-lbl">Timeline</span><span class="meta-val">Aug 2025 – May 2026</span></div>
+    <div class="meta-item reveal stagger-1"><span class="meta-lbl">Client</span><span class="meta-val">Salesforce Trailhead</span></div>
+    <div class="meta-item reveal stagger-2"><span class="meta-lbl">Scope</span><span class="meta-val">End-to-End Product Design</span></div>
+    <div class="meta-item reveal stagger-3"><span class="meta-lbl">About</span><span class="meta-val">Increasing engagement for power users beyond their learning journey</span></div>
   </div>
 </div>
 
 <!-- ============================================================
-     ABOUT — What is Trailhead + Project Description
+     ABOUT
 ============================================================ -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
-
       <div class="acard acard-lav reveal">
         <h3 class="acard-title">What is Trailhead?</h3>
-        <p>Salesforce Trailhead is a free learning platform used by millions of professionals to get certified and build careers in enterprise software. Through guided modules, hands-on challenges, and community forums, it takes complete beginners to certified experts.</p>
+        <p>Salesforce Trailhead is a free learning platform used by millions of professionals to get certified and build careers in enterprise software. Through guided modules, hands-on challenges, and community forums, it takes beginners to certified experts.</p>
       </div>
-
       <div class="acard acard-navy reveal stagger-1">
         <h3 class="acard-title">Project Description</h3>
         <p>Over 10 months, our team partnered with the Salesforce Trailhead product team to research, design, and prototype new features for the platform's most experienced users — the power users who built their careers on Trailhead and then quietly stopped coming back.</p>
       </div>
-
     </div>
 
-    <!-- Mascot images
-         ↓ Replace these .mascot-ph divs with actual images once ready:
-           <img src="assets/mascots/trailblazer-single.png" alt="Trailblazer mascot" style="width:100%;border-radius:24px;" />
-           <img src="assets/mascots/trailblazer-campfire.png" alt="Trailhead mascot group" style="width:100%;border-radius:24px;" />
-    -->
     <div class="mascot-row">
+      <!--
+        MASCOT IMAGES
+        Replace each .mascot-ph with the real image once ready:
+          <img src="assets/mascots/trailblazer-single.png" alt="Trailblazer" style="width:100%;border-radius:24px;" />
+      -->
       <div class="mascot-ph reveal stagger-2">
         <span class="mascot-ph-icon">🐻</span>
-        <span>Drop <strong>assets/mascots/trailblazer-single.png</strong> here</span>
+        <span class="mascot-ph-label">assets/mascots/trailblazer-single.png</span>
       </div>
       <div class="mascot-ph reveal stagger-3">
         <span class="mascot-ph-icon">🏕️</span>
-        <span>Drop <strong>assets/mascots/trailblazer-campfire.png</strong> here</span>
+        <span class="mascot-ph-label">assets/mascots/trailblazer-campfire.png</span>
       </div>
     </div>
   </div>
 
-  <!-- Faint mountain watermark -->
   <svg class="section-mountain" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
     <polygon points="0,140 300,40 600,140" fill="#321d71"/>
     <polygon points="400,140 720,20 1040,140" fill="#321d71"/>
@@ -1005,134 +1005,91 @@
   </svg>
 </section>
 
-<!-- Wave to next section -->
-<svg class="wave-to-dark" viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="background:#fff;">
+<!-- Wave -->
+<svg class="wave-to-dark" viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="background:#fff;display:block;">
   <path d="M0,56 C360,0 1080,56 1440,0 L1440,56 L0,56 Z" fill="#F5F7FA"/>
 </svg>
 
 <!-- ============================================================
-     PROBLEM / RESEARCH
+     RESEARCH / PROBLEM
 ============================================================ -->
 <section id="research">
   <div class="container">
-
     <h2 class="problem-lede reveal">Trailhead was built for the climb, and not for what comes after.</h2>
     <p class="problem-sub reveal stagger-1">As users become experts, Trailhead use shifts from continuous learning to occasional, task-driven engagement — until it stops entirely.</p>
 
-    <!-- Engagement graph -->
     <div class="graph-card reveal stagger-2">
       <p class="graph-card-title">Engagement vs. Learner Journey</p>
       <svg class="graph-svg" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg">
-        <!-- Axes -->
         <line x1="48" y1="16" x2="48" y2="166" stroke="#CBD5E1" stroke-width="1.5"/>
         <line x1="48" y1="166" x2="528" y2="166" stroke="#CBD5E1" stroke-width="1.5"/>
-        <!-- Y label -->
-        <text x="12" y="100" fill="#9096a1" font-size="10" font-family="Inter,sans-serif" transform="rotate(-90,22,100)" text-anchor="middle">ENGAGEMENT</text>
-        <!-- X label -->
-        <text x="288" y="188" fill="#9096a1" font-size="10" font-family="Inter,sans-serif" text-anchor="middle">LEARNER JOURNEY</text>
-        <!-- Rising line (learning phase) — blue -->
+        <text x="22" y="100" fill="#9096a1" font-size="10" font-family="Josefin Sans,sans-serif" transform="rotate(-90,22,100)" text-anchor="middle" letter-spacing="1">ENGAGEMENT</text>
+        <text x="288" y="188" fill="#9096a1" font-size="10" font-family="Josefin Sans,sans-serif" text-anchor="middle" letter-spacing="1">LEARNER JOURNEY</text>
         <path d="M60,150 Q120,120 200,68 Q240,44 268,36" stroke="#0176D3" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- Milestone marker -->
-        <circle cx="268" cy="36" r="7" fill="#E8722A"/>
-        <text x="278" y="28" fill="#E8722A" font-size="9" font-family="Inter,sans-serif" font-weight="600">MILESTONE</text>
-        <!-- Dashed drop line (disengagement) — orange -->
+        <circle cx="268" cy="36" r="8" fill="#E8722A"/>
+        <text x="280" y="30" fill="#E8722A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">MILESTONE</text>
         <path d="M268,36 Q340,80 440,132 Q480,150 516,158" stroke="#E8722A" stroke-width="2.5" fill="none" stroke-dasharray="8,5" stroke-linecap="round"/>
-        <!-- Drop arrow -->
-        <text x="358" y="115" fill="#E8722A" font-size="9" font-family="Inter,sans-serif" font-style="italic">Expert users start disengaging here</text>
-        <!-- Trajectory label -->
-        <text x="110" y="100" fill="#0176D3" font-size="9" font-family="Inter,sans-serif" font-style="italic">Certifications &amp; Badges</text>
+        <text x="358" y="110" fill="#E8722A" font-size="9" font-family="Josefin Sans,sans-serif" font-style="italic">Expert users start disengaging here</text>
       </svg>
     </div>
 
-    <!-- We found section -->
     <p class="findings-lede reveal">We found about our advanced users that:</p>
 
     <div class="donut-grid">
       <div class="donut-card reveal stagger-1">
-        <div class="donut-ring d64"><span class="donut-pct">64%</span></div>
+        <div class="donut-ring" data-pct="64"><span class="donut-pct">64%</span></div>
         <p class="donut-desc">Disengage after hitting major milestones like certifications</p>
       </div>
       <div class="donut-card reveal stagger-2">
-        <div class="donut-ring d45"><span class="donut-pct">45%</span></div>
+        <div class="donut-ring" data-pct="45"><span class="donut-pct">45%</span></div>
         <p class="donut-desc">Mentioned supplementing Trailhead with other tools (ChatGPT, YouTube, Slack)</p>
       </div>
       <div class="donut-card reveal stagger-3">
-        <div class="donut-ring d45"><span class="donut-pct">45%</span></div>
+        <div class="donut-ring" data-pct="45"><span class="donut-pct">45%</span></div>
         <p class="donut-desc">Found content to be too shallow for advanced users</p>
       </div>
       <div class="donut-card reveal stagger-4">
-        <div class="donut-ring d36"><span class="donut-pct">36%</span></div>
-        <p class="donut-desc">Were unhappy with the existing personalization recommendations</p>
+        <div class="donut-ring" data-pct="36"><span class="donut-pct">36%</span></div>
+        <p class="donut-desc">Were unhappy with existing personalization recommendations</p>
       </div>
     </div>
 
-    <!-- Stats bar -->
     <div class="stats-bar">
       <div class="stat-blk reveal">
-        <span class="stat-n">11</span>
+        <span class="stat-n" data-count="11">0</span>
         <p class="stat-d">Power users interviewed across 2 rounds</p>
       </div>
       <div class="stat-blk reveal stagger-1">
-        <span class="stat-n">2</span>
+        <span class="stat-n" data-count="2">0</span>
         <p class="stat-d">Rounds of semi-structured interviews</p>
       </div>
       <div class="stat-blk reveal stagger-2">
-        <span class="stat-n">5</span>
+        <span class="stat-n" data-count="5">0</span>
         <p class="stat-d">Regions — US, India, Canada, Europe, Middle East</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- Wave to navy insights -->
+<!-- Wave -->
 <svg class="wave-to-dark" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="background:#fff;display:block;">
   <path d="M0,0 C480,60 960,0 1440,60 L1440,60 L0,60 Z" fill="#141952"/>
 </svg>
 
 <!-- ============================================================
-     INSIGHTS / HMW (dark navy)
+     INSIGHTS / HMW (navy)
 ============================================================ -->
 <section id="insights">
   <div class="container">
-
-    <p class="hmw-q reveal">
-      "How might we drive advanced users to keep returning to Trailhead with deeper, relevant, and career-aligned experiences?"
-    </p>
-
+    <p class="hmw-q reveal">"How might we drive advanced users to keep returning to Trailhead with deeper, relevant, and career-aligned experiences?"</p>
     <div class="insight-grid">
-      <div class="i-card reveal stagger-1">
-        <div class="i-card-icon">🏆</div>
-        <p class="i-card-title">Certifications are the only universal motivator</p>
-        <p class="i-card-text">"Badges and the Ranger tag — not that much. Certifications do help."</p>
-      </div>
-      <div class="i-card reveal stagger-2">
-        <div class="i-card-icon">📉</div>
-        <p class="i-card-title">Content gets shallow too fast</p>
-        <p class="i-card-text">"You learn in auto-roto mode, your brain does not work. Things are cookie cutter and too basic."</p>
-      </div>
-      <div class="i-card reveal stagger-3">
-        <div class="i-card-icon">🔀</div>
-        <p class="i-card-title">The community has migrated away</p>
-        <p class="i-card-text">"On Trailhead you get a response in 48-72 hrs. On Slack you get it by afternoon."</p>
-      </div>
-      <div class="i-card reveal stagger-4">
-        <div class="i-card-icon">🔔</div>
-        <p class="i-card-title">Usage is reactive, not habitual</p>
-        <p class="i-card-text">Users return only when triggered by a new project or deadline — not from any pull the platform creates.</p>
-      </div>
-      <div class="i-card reveal stagger-5">
-        <div class="i-card-icon">🤖</div>
-        <p class="i-card-title">Users supplement Trailhead without guilt</p>
-        <p class="i-card-text">Going to ChatGPT first and following the Trailhead links it surfaces. Nobody apologised.</p>
-      </div>
-      <div class="i-card reveal stagger-6">
-        <div class="i-card-icon">📈</div>
-        <p class="i-card-title">Contribution lifecycle the platform ignores</p>
-        <p class="i-card-text">Users move from consuming → answering → speaking at conferences. Trailhead only supports the first two.</p>
-      </div>
+      <div class="i-card reveal stagger-1"><div class="i-card-icon">🏆</div><p class="i-card-title">Certifications are the only universal motivator</p><p class="i-card-text">"Badges and the Ranger tag — not that much. Certifications do help."</p></div>
+      <div class="i-card reveal stagger-2"><div class="i-card-icon">📉</div><p class="i-card-title">Content gets shallow too fast</p><p class="i-card-text">"You learn in auto-roto mode, your brain does not work. Things are cookie cutter and too basic."</p></div>
+      <div class="i-card reveal stagger-3"><div class="i-card-icon">🔀</div><p class="i-card-title">The community has migrated away</p><p class="i-card-text">"On Trailhead you get a response in 48-72 hrs. On Slack you get it by afternoon."</p></div>
+      <div class="i-card reveal stagger-4"><div class="i-card-icon">🔔</div><p class="i-card-title">Usage is reactive, not habitual</p><p class="i-card-text">Users return only when triggered by a project or deadline — not from any pull the platform creates.</p></div>
+      <div class="i-card reveal stagger-5"><div class="i-card-icon">🤖</div><p class="i-card-title">Users supplement Trailhead without guilt</p><p class="i-card-text">Going to ChatGPT first and following Trailhead links it surfaces. Nobody apologised.</p></div>
+      <div class="i-card reveal stagger-6"><div class="i-card-icon">📈</div><p class="i-card-title">Contribution lifecycle the platform ignores</p><p class="i-card-text">Users move from consuming → answering → speaking at conferences. Trailhead only supports the first two.</p></div>
     </div>
-
   </div>
 </section>
 
@@ -1148,28 +1105,19 @@
   <div class="container">
     <p class="s-label reveal">Ideation</p>
     <h2 class="s-h2 reveal stagger-1">From constraints to concepts</h2>
-    <p class="s-body reveal stagger-2">
-      Ideation began with five engagement requirement areas: post-milestone engagement, career visibility, habit-forming systems, community integration, and real-world problem solving. We used these as constraints — not prompts — to find the smallest intervention that would create a genuine reason to return.
-    </p>
+    <p class="s-body reveal stagger-2">Ideation began with five engagement requirement areas: post-milestone engagement, career visibility, habit-forming systems, community integration, and real-world problem solving. We used these as constraints — not prompts — to find the smallest intervention that would create a genuine reason to return.</p>
 
     <!--
-      IDEATION PHOTOS
-      Rename your three image files and drop them into the Capstone Website folder:
-        ideation-whiteboard.jpg  →  whiteboard synthesis photo
-        ideation-team-1.jpg      →  team at the screen (wide shot)
-        ideation-team-2.jpg      →  team gathered around table
+      IDEATION PHOTOS — rename and drop in Capstone Website folder:
+        ideation-whiteboard.jpg · ideation-team-1.jpg · ideation-team-2.jpg
     -->
     <div class="ideation-gallery reveal stagger-3">
       <div class="ig-main">
-        <img src="ideation-whiteboard.jpg" alt="Whiteboard synthesis session — research themes and problem framing" loading="lazy" />
+        <img src="ideation-whiteboard.jpg" alt="Whiteboard synthesis session" loading="lazy" />
       </div>
       <div class="ig-pair">
-        <div class="ig-pair-item">
-          <img src="ideation-team-1.jpg" alt="Team reviewing affinity map on shared display" loading="lazy" />
-        </div>
-        <div class="ig-pair-item">
-          <img src="ideation-team-2.jpg" alt="Team collaborating on concept development" loading="lazy" />
-        </div>
+        <div class="ig-pair-item"><img src="ideation-team-1.jpg" alt="Team session 1" loading="lazy" /></div>
+        <div class="ig-pair-item"><img src="ideation-team-2.jpg" alt="Team session 2" loading="lazy" /></div>
       </div>
     </div>
     <p class="s-caption reveal">Team ideation sessions — whiteboard synthesis, affinity mapping, concept development</p>
@@ -1182,82 +1130,138 @@
 </svg>
 
 <!-- ============================================================
-     SOLUTIONS (dark navy)
+     SOLUTIONS — HORIZONTAL STICKY SCROLL (desktop)
+     MOBILE fallback below
 ============================================================ -->
-<section id="solutions">
-  <div class="container">
+<div id="solutions" class="h-scroll-outer">
+  <div class="h-scroll-sticky">
+    <div class="h-scroll-track" id="h-track">
 
-    <p class="sol-label reveal">Solution</p>
-    <h2 class="sol-h2 reveal stagger-1">Reimagined Trailhead.</h2>
-    <p class="sol-sub reveal stagger-2">Reimagined Trailhead as an experience that builds real-world readiness, keeping expert users engaged beyond milestones.</p>
-
-    <div class="feat-grid">
-
-      <!-- Trailhead Solve -->
-      <div class="feat-card reveal stagger-1">
-        <div class="feat-num-row">
-          <div class="feat-badge">1</div>
-          <span class="feat-num-lbl">Feature One</span>
-        </div>
-        <p class="feat-name">Trailhead Solve</p>
-        <p class="feat-tagline">An AI chatbot that answers real work questions and nudges users to trails.</p>
-        <p class="feat-desc">Describe a real Salesforce problem in plain language. Get a structured, expert answer calibrated to your certification level and Salesforce release — not a list of trails to complete. Includes expertise toggle, version-specific flagging, and a community escalation path.</p>
-        <!--
-          SCREENSHOT PLACEHOLDER — Trailhead Solve
-          Replace this div with:
-            <img src="assets/screenshots/trailhead-solve.png"
-                 alt="Trailhead Solve interface" style="width:100%;border-radius:12px;margin-top:16px;" />
-        -->
-        <div class="scr-ph">
-          <span class="scr-ph-icon">📸</span>
-          <span>Drop <strong>assets/screenshots/trailhead-solve.png</strong> here</span>
+      <!-- Slide 0: Intro -->
+      <div class="h-slide h-slide-intro">
+        <p class="sol-label">Solution</p>
+        <h2 class="sol-h2">Reimagined<br/>Trailhead.</h2>
+        <p class="sol-sub">Reimagined as an experience that builds real-world readiness, keeping expert users engaged beyond milestones.</p>
+        <div class="scroll-hint">
+          Scroll to explore
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
       </div>
 
-      <!-- Adaptive Dashboard -->
-      <div class="feat-card reveal stagger-2">
-        <div class="feat-num-row">
-          <div class="feat-badge">2</div>
-          <span class="feat-num-lbl">Feature Two</span>
-        </div>
-        <p class="feat-name">Adaptive Dashboard</p>
-        <p class="feat-tagline">A homepage that learns from you and tells you what to do next.</p>
-        <p class="feat-desc">An adaptive career layer that tells you what changed, where you stand, and what to do next. One personalised action — never a list — tied to certifications, recent Solve sessions, and release changes relevant to your role. Each visit becomes more valuable than the last.</p>
-        <!--
-          SCREENSHOT PLACEHOLDER — Adaptive Dashboard
-          Replace this div with:
-            <img src="assets/screenshots/adaptive-dashboard.png"
-                 alt="Adaptive Dashboard interface" style="width:100%;border-radius:12px;margin-top:16px;" />
-        -->
-        <div class="scr-ph">
-          <span class="scr-ph-icon">📸</span>
-          <span>Drop <strong>assets/screenshots/adaptive-dashboard.png</strong> here</span>
+      <!-- Slide 1: Trailhead Solve -->
+      <div class="h-slide h-slide-feat">
+        <div class="feat-inner">
+          <div class="feat-card">
+            <div class="feat-num-row"><div class="feat-badge">1</div><span class="feat-num-lbl">Feature One</span></div>
+            <p class="feat-name">Trailhead Solve</p>
+            <p class="feat-tagline">An AI chatbot that answers real work questions and nudges users to trails.</p>
+            <p class="feat-desc">Describe a real Salesforce problem in plain language. Get a structured, expert answer calibrated to your certification level and Salesforce release — not a list of trails to complete. Includes expertise toggle, version-specific flagging, and a community escalation path.</p>
+          </div>
+          <div class="feat-card">
+            <!--
+              TRAILHEAD SOLVE SCREENSHOT
+              Replace .scr-ph with:
+                <img src="assets/screenshots/trailhead-solve.png" alt="Trailhead Solve"
+                     style="width:100%;border-radius:12px;margin-top:0;" />
+            -->
+            <div class="scr-ph">
+              <span class="scr-ph-icon">📸</span>
+              <span>assets/screenshots/trailhead-solve.png</span>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Slide 2: Adaptive Dashboard -->
+      <div class="h-slide h-slide-feat">
+        <div class="feat-inner">
+          <div class="feat-card">
+            <div class="feat-num-row"><div class="feat-badge">2</div><span class="feat-num-lbl">Feature Two</span></div>
+            <p class="feat-name">Adaptive Dashboard</p>
+            <p class="feat-tagline">A homepage that learns from you and tells you what to do next.</p>
+            <p class="feat-desc">An adaptive career layer that tells you what changed, where you stand, and what to do next. One personalised action — never a list — tied to certifications, recent Solve sessions, and release changes. Each visit becomes more valuable than the last.</p>
+          </div>
+          <div class="feat-card">
+            <!--
+              ADAPTIVE DASHBOARD SCREENSHOT
+              Replace .scr-ph with:
+                <img src="assets/screenshots/adaptive-dashboard.png" alt="Adaptive Dashboard"
+                     style="width:100%;border-radius:12px;margin-top:0;" />
+            -->
+            <div class="scr-ph">
+              <span class="scr-ph-icon">📸</span>
+              <span>assets/screenshots/adaptive-dashboard.png</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: How does it work -->
+      <div class="h-slide h-slide-how">
+        <div class="how-wrap">
+          <p class="how-h">How does it work?</p>
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="step-badge">1</div>
+              <p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base — calibrated to your expertise level.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-badge">2</div>
+              <p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional — so you're never over-explained or underserved.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-badge">3</div>
+              <p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish — so you get an expert answer either way.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end h-track -->
+
+    <!-- Scroll progress dots -->
+    <div class="h-progress-dots" id="h-dots">
+      <div class="h-dot active" data-slide="0"></div>
+      <div class="h-dot" data-slide="1"></div>
+      <div class="h-dot" data-slide="2"></div>
+      <div class="h-dot" data-slide="3"></div>
     </div>
 
-    <!-- How does it work -->
-    <div class="how-wrap reveal">
+  </div><!-- end h-sticky -->
+</div><!-- end h-scroll-outer -->
+
+<!-- ── Mobile fallback for Solutions ── -->
+<div class="solutions-mobile">
+  <div class="container">
+    <p class="sol-label" style="color:rgba(255,255,255,0.4);">Solution</p>
+    <h2 class="sol-h2" style="font-family:'Montserrat',sans-serif;font-weight:900;color:#E8722A;font-size:clamp(32px,8vw,48px);margin-bottom:12px;">Reimagined Trailhead.</h2>
+    <p style="color:rgba(255,255,255,0.6);font-size:15px;margin-bottom:32px;font-family:'Josefin Sans',sans-serif;">Reimagined as an experience that builds real-world readiness, keeping expert users engaged beyond milestones.</p>
+    <div class="feat-card" style="margin-bottom:20px;">
+      <div class="feat-num-row"><div class="feat-badge">1</div><span class="feat-num-lbl">Feature One</span></div>
+      <p class="feat-name">Trailhead Solve</p>
+      <p class="feat-tagline">Answers, not courses.</p>
+      <p class="feat-desc">Describe a real Salesforce problem and get a structured, expert answer — not a list of trails to complete.</p>
+      <div class="scr-ph"><span class="scr-ph-icon">📸</span><span>assets/screenshots/trailhead-solve.png</span></div>
+    </div>
+    <div class="feat-card" style="margin-bottom:32px;">
+      <div class="feat-num-row"><div class="feat-badge">2</div><span class="feat-num-lbl">Feature Two</span></div>
+      <p class="feat-name">Adaptive Dashboard</p>
+      <p class="feat-tagline">One reason to come back, every time.</p>
+      <p class="feat-desc">An adaptive career layer that tells you what changed, where you stand, and what to do next.</p>
+      <div class="scr-ph"><span class="scr-ph-icon">📸</span><span>assets/screenshots/adaptive-dashboard.png</span></div>
+    </div>
+    <div class="how-wrap" style="max-width:100%;">
       <p class="how-h">How does it work?</p>
       <div class="how-steps">
-        <div class="how-step">
-          <div class="step-badge">1</div>
-          <p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base — calibrated to your expertise level.</p>
-        </div>
-        <div class="how-step">
-          <div class="step-badge">2</div>
-          <p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional — so you're never over-explained or underserved.</p>
-        </div>
-        <div class="how-step">
-          <div class="step-badge">3</div>
-          <p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish — so you get an expert answer either way.</p>
-        </div>
+        <div class="how-step"><div class="step-badge">1</div><p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base.</p></div>
+        <div class="how-step"><div class="step-badge">2</div><p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional.</p></div>
+        <div class="how-step"><div class="step-badge">3</div><p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish.</p></div>
       </div>
     </div>
-
   </div>
-</section>
+</div>
 
 <!-- Wave back to white -->
 <svg class="wave-to-light" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="background:#141952;display:block;">
@@ -1265,7 +1269,7 @@
 </svg>
 
 <!-- ============================================================
-     TESTING & IMPACT
+     TESTING
 ============================================================ -->
 <section id="testing">
   <div class="container">
@@ -1277,60 +1281,28 @@
       <div class="eval-card reveal stagger-1">
         <span class="eval-badge-tag">Internal</span>
         <h3>AI-Simulated Stress Testing</h3>
-        <p>We built 12 AI agents from our research data to simulate power user behavior and stress-test prototype flows before any real participant encountered them. Each agent was trained on interview transcripts and explored the prototype independently.</p>
+        <p>We built 12 AI agents from our research data to simulate power user behavior and stress-test prototype flows before any real participant encountered them.</p>
       </div>
       <div class="eval-card reveal stagger-2">
         <span class="eval-badge-tag">External</span>
         <h3>Moderated Think-Aloud Sessions</h3>
-        <p>8 Salesforce power users, ~30 minutes each. Each session included a realistic Salesforce problem typed into Solve, then free exploration of the Dashboard. Where participants would normally use ChatGPT, we asked them to try Solve first — giving us a live substitution signal.</p>
+        <p>8 Salesforce power users, ~30 minutes each. Where participants would normally use ChatGPT, we asked them to try Solve first — giving us a live substitution signal.</p>
       </div>
     </div>
 
     <div class="results-grid">
-      <div class="res-card reveal stagger-1">
-        <div class="res-num">6/8</div>
-        <p class="res-desc">Would use Trailhead Solve over ChatGPT for Salesforce-specific questions</p>
-      </div>
-      <div class="res-card reveal stagger-2">
-        <div class="res-num">4.5/5</div>
-        <p class="res-desc">Average confidence rating in Solve's answers</p>
-      </div>
-      <div class="res-card reveal stagger-3">
-        <div class="res-num">5/8</div>
-        <p class="res-desc">Said the Dashboard surfaced insights they wouldn't have explored on their own</p>
-      </div>
-      <div class="res-card reveal stagger-4">
-        <div class="res-num">6/8</div>
-        <p class="res-desc">Expressed unprompted return intent after the session</p>
-      </div>
+      <div class="res-card reveal stagger-1"><div class="res-num">6/8</div><p class="res-desc">Would use Trailhead Solve over ChatGPT for Salesforce-specific questions</p></div>
+      <div class="res-card reveal stagger-2"><div class="res-num">4.5/5</div><p class="res-desc">Average confidence rating in Solve's answers</p></div>
+      <div class="res-card reveal stagger-3"><div class="res-num">5/8</div><p class="res-desc">Said the Dashboard surfaced insights they wouldn't have explored on their own</p></div>
+      <div class="res-card reveal stagger-4"><div class="res-num">6/8</div><p class="res-desc">Expressed unprompted return intent after the session</p></div>
     </div>
 
-    <!-- Next Steps -->
     <p class="s-label reveal" style="margin-top:52px;margin-bottom:10px;">Implementation &amp; Next Steps</p>
     <div class="next-grid">
-      <div class="next-card reveal stagger-1">
-        <div class="next-icon">🚀</div>
-        <div>
-          <h4>Phase 1 — Launch Trailhead Solve</h4>
-          <p>Launch the conversational problem-solving workspace for power users within Trailhead. Refine answer depth based on structured user feedback.</p>
-        </div>
-      </div>
-      <div class="next-card reveal stagger-2">
-        <div class="next-icon">🔗</div>
-        <div>
-          <h4>Phase 2 — Full Suite</h4>
-          <p>Introduce the Knowledge Archive and Adaptive Career Dashboard, making every session more valuable than the last.</p>
-        </div>
-      </div>
-      <div class="next-card reveal stagger-3">
-        <div class="next-icon">🌐</div>
-        <div>
-          <h4>Scale &amp; Pitch</h4>
-          <p>Scale testing globally with certified Salesforce professionals. Pitch integration roadmap to the Salesforce Trailhead product team.</p>
-        </div>
-      </div>
+      <div class="next-card reveal stagger-1"><div class="next-icon">🚀</div><div><h4>Phase 1 — Trailhead Solve</h4><p>Launch the conversational problem-solving workspace. Refine answer depth based on structured user feedback.</p></div></div>
+      <div class="next-card reveal stagger-2"><div class="next-icon">🔗</div><div><h4>Phase 2 — Full Suite</h4><p>Introduce Knowledge Archive and Adaptive Career Dashboard, making every session more valuable than the last.</p></div></div>
+      <div class="next-card reveal stagger-3"><div class="next-icon">🌐</div><div><h4>Scale &amp; Pitch</h4><p>Scale testing globally with certified Salesforce professionals. Pitch integration roadmap to the product team.</p></div></div>
     </div>
-
   </div>
 </section>
 
@@ -1341,26 +1313,16 @@
   <div class="container">
     <p class="s-label reveal">Reflection</p>
     <h2 class="s-h2 reveal stagger-1">What we learned building this</h2>
-
     <div class="ref-grid">
-      <div class="ref-card reveal stagger-1">
-        <h3>What worked</h3>
-        <p>Focusing on a specific segment — power users who had already arrived — gave every design decision a clear test. If a feature could apply to a beginner, it was wrong. That constraint produced sharper work than any open-ended prompt could have.</p>
-      </div>
-      <div class="ref-card reveal stagger-2">
-        <h3>What was hard</h3>
-        <p>Recruiting authentic power users within a semester timeline is genuinely difficult. These are full-time professionals across five time zones with no particular reason to give a student team 30 minutes. The connections from round one made round two possible.</p>
-      </div>
-      <div class="ref-card reveal stagger-3">
-        <h3>What we'd do next</h3>
-        <p>Scale testing globally with certified professionals. Refine Solve answer quality using structured feedback loops. Pitch an integration roadmap to Salesforce Trailhead's product team. Phase 1 was the problem-solving workspace. Phase 2 is the full suite working together.</p>
-      </div>
+      <div class="ref-card reveal stagger-1"><h3>What worked</h3><p>Focusing on power users who had already arrived gave every design decision a clear test. If a feature could apply to a beginner, it was wrong. That constraint produced sharper work than any open-ended prompt could have.</p></div>
+      <div class="ref-card reveal stagger-2"><h3>What was hard</h3><p>Recruiting authentic power users within a semester timeline is genuinely difficult. These are full-time professionals across five time zones who have no particular reason to give a student team 30 minutes.</p></div>
+      <div class="ref-card reveal stagger-3"><h3>What we'd do next</h3><p>Scale testing globally with certified professionals. Refine Solve answer quality using structured feedback loops. Pitch an integration roadmap to Salesforce Trailhead's product team.</p></div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     FOOTER — Connect With the Team
+     FOOTER
 ============================================================ -->
 <footer>
   <div class="footer-grid">
@@ -1371,123 +1333,212 @@
         Rhea Mittal &nbsp;·&nbsp; Sambit Nayak
       </p>
       <div class="footer-links">
-        <a href="https://trailhead.salesforce.com" target="_blank" rel="noopener" class="footer-link">
-          Salesforce Trailhead ↗
-        </a>
-        <a href="https://soic.iupui.edu" target="_blank" rel="noopener" class="footer-link">
-          IUI HCI Program ↗
-        </a>
+        <a href="https://trailhead.salesforce.com" target="_blank" rel="noopener" class="footer-link">Salesforce Trailhead ↗</a>
+        <a href="https://soic.iupui.edu" target="_blank" rel="noopener" class="footer-link">IUI HCI Program ↗</a>
       </div>
     </div>
-
     <!--
-      QR CODE
-      Replace this .qr-ph div with:
+      QR CODE — Replace .qr-ph with:
         <img src="assets/qr-code.png" alt="Scan to visit site" style="width:140px;border-radius:12px;" />
     -->
     <div class="qr-ph">
       <span style="font-size:28px;">⬛</span>
-      <span>Drop<br/>assets/qr-code.png</span>
+      <span>assets/qr-code.png</span>
     </div>
   </div>
-
-  <p class="footer-copy">
-    Designing Adaptive Engagement for Evolving Learner Needs · HCI Capstone 2026 · Indiana University Indianapolis × Salesforce Trailhead
-  </p>
+  <p class="footer-copy">Designing Adaptive Engagement for Evolving Learner Needs · HCI Capstone 2026 · Indiana University Indianapolis × Salesforce Trailhead</p>
 </footer>
 
 <script>
 (function () {
   'use strict';
 
-  /* CHAPTERS */
+  /* ── CHAPTERS ── */
   const chapters = [
-    { id: 'overview',   num: '①', name: 'Overview' },
-    { id: 'research',   num: '②', name: 'The Problem' },
-    { id: 'insights',   num: '③', name: 'Insights' },
-    { id: 'ideation',   num: '④', name: 'Ideation' },
-    { id: 'solutions',  num: '⑤', name: 'Solution' },
-    { id: 'testing',    num: '⑥', name: 'Testing' },
-    { id: 'reflection', num: '⑦', name: 'Reflection' },
+    { id:'overview',   num:'①', name:'Overview' },
+    { id:'research',   num:'②', name:'The Problem' },
+    { id:'insights',   num:'③', name:'Insights' },
+    { id:'ideation',   num:'④', name:'Ideation' },
+    { id:'solutions',  num:'⑤', name:'Solution' },
+    { id:'testing',    num:'⑥', name:'Testing' },
+    { id:'reflection', num:'⑦', name:'Reflection' },
   ];
-
   let activeChapter = 0, menuOpen = false;
 
   const progressBar = document.getElementById('progress-bar');
-  const pillNum     = document.getElementById('pill-num');
-  const pillName    = document.getElementById('pill-name');
-  const pillPrev    = document.getElementById('pill-prev');
-  const pillNext    = document.getElementById('pill-next');
-  const arrowLeft   = document.getElementById('pill-arrow-left');
-  const arrowRight  = document.getElementById('pill-arrow-right');
-  const pill        = document.getElementById('chapter-pill');
-  const menu        = document.getElementById('chapter-menu');
-  const menuItems   = document.querySelectorAll('.chapter-menu-item');
+  const pillNum = document.getElementById('pill-num');
+  const pillName = document.getElementById('pill-name');
+  const pillPrev = document.getElementById('pill-prev');
+  const pillNext = document.getElementById('pill-next');
+  const arrowL = document.getElementById('pill-arrow-left');
+  const arrowR = document.getElementById('pill-arrow-right');
+  const pill = document.getElementById('chapter-pill');
+  const menu = document.getElementById('chapter-menu');
+  const menuItems = document.querySelectorAll('.chapter-menu-item');
 
+  function updateChapter(idx) {
+    activeChapter = idx;
+    const c=chapters[idx], prev=chapters[idx-1], next=chapters[idx+1];
+    pillNum.textContent=c.num; pillName.textContent=c.name;
+    if(prev){pillPrev.textContent=prev.num+' '+prev.name;pillPrev.classList.add('visible');arrowL.style.display='';}
+    else{pillPrev.textContent='';pillPrev.classList.remove('visible');arrowL.style.display='none';}
+    if(next){pillNext.textContent=next.num+' '+next.name;pillNext.classList.add('visible');arrowR.style.display='';}
+    else{pillNext.textContent='';pillNext.classList.remove('visible');arrowR.style.display='none';}
+    menuItems.forEach((item,i)=>item.classList.toggle('active',i===idx));
+  }
+  function openMenu(){menuOpen=true;menu.classList.add('open');pill.setAttribute('aria-expanded','true');}
+  function closeMenu(){menuOpen=false;menu.classList.remove('open');pill.setAttribute('aria-expanded','false');}
+
+  pill.addEventListener('click',e=>{e.stopPropagation();menuOpen?closeMenu():openMenu();});
+  pill.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();menuOpen?closeMenu():openMenu();}});
+  document.addEventListener('click',()=>{if(menuOpen)closeMenu();});
+  menu.addEventListener('click',e=>e.stopPropagation());
+  menuItems.forEach(item=>{
+    item.addEventListener('click',()=>{
+      const t=document.getElementById(item.dataset.target);
+      if(t)t.scrollIntoView({behavior:'smooth'});
+      closeMenu();
+    });
+    item.addEventListener('keydown',e=>{if(e.key==='Enter')item.click();});
+  });
+
+  /* ── SECTION OBSERVER (chapter tracking) ── */
+  const secObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const idx=chapters.findIndex(c=>c.id===e.target.id);
+        if(idx!==-1)updateChapter(idx);
+      }
+    });
+  },{threshold:0.3});
+  chapters.forEach(c=>{const el=document.getElementById(c.id);if(el)secObs.observe(el);});
+
+  /* ── REVEAL ON SCROLL ── */
+  const revObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+  /* ── ANIMATED DONUT CHARTS ── */
+  function animateDonut(el, targetPct) {
+    let current = 0;
+    const navy = '#141952', gray = '#CBD5E1';
+    const duration = 900, fps = 60, steps = duration / (1000 / fps);
+    const step = targetPct / steps;
+    const interval = setInterval(() => {
+      current = Math.min(current + step, targetPct);
+      el.style.background = `conic-gradient(${navy} 0% ${current}%, ${gray} ${current}% 100%)`;
+      if (current >= targetPct) clearInterval(interval);
+    }, 1000 / fps);
+  }
+
+  const donutObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const pct = parseFloat(e.target.dataset.pct);
+        animateDonut(e.target, pct);
+        donutObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.donut-ring[data-pct]').forEach(el => donutObs.observe(el));
+
+  /* ── COUNTER ANIMATION ── */
+  function animateCounter(el, target) {
+    let current = 0;
+    const duration = 800, fps = 60, steps = duration / (1000 / fps);
+    const step = target / steps;
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.round(current);
+      if (current >= target) { el.textContent = target; clearInterval(interval); }
+    }, 1000 / fps);
+  }
+
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = parseInt(e.target.dataset.count, 10);
+        animateCounter(e.target, target);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-n[data-count]').forEach(el => counterObs.observe(el));
+
+  /* ── HORIZONTAL SCROLL (desktop only) ── */
+  const hOuter  = document.getElementById('solutions');
+  const hTrack  = document.getElementById('h-track');
+  const hDots   = document.querySelectorAll('.h-dot');
+  let numSlides = 0;
+  let hEnabled  = false;
+
+  function initHScroll() {
+    if (!hOuter || !hTrack) return;
+    hEnabled = window.innerWidth >= 768;
+    if (!hEnabled) return;
+
+    const slides = hTrack.querySelectorAll('.h-slide');
+    numSlides = slides.length;
+    const trackWidth = numSlides * window.innerWidth;
+    hTrack.style.width = trackWidth + 'px';
+    // extra scroll height: (numSlides - 1) * 100vh
+    hOuter.style.height = (numSlides * 100) + 'vh';
+  }
+
+  function updateHScroll() {
+    if (!hEnabled || !hOuter || !hTrack) return;
+    const outerTop = hOuter.getBoundingClientRect().top + window.scrollY;
+    const scrolled = window.scrollY - outerTop;
+    const maxScroll = hOuter.offsetHeight - window.innerHeight;
+    if (maxScroll <= 0) return;
+
+    const pct = Math.max(0, Math.min(1, scrolled / maxScroll));
+    const maxX = hTrack.scrollWidth - window.innerWidth;
+    hTrack.style.transform = `translateX(${-pct * maxX}px)`;
+
+    // Update dots
+    const slideIndex = Math.round(pct * (numSlides - 1));
+    hDots.forEach((d, i) => d.classList.toggle('active', i === slideIndex));
+  }
+
+  // Dot clicks: scroll to that slide
+  hDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      if (!hEnabled) return;
+      const slideIdx = parseInt(dot.dataset.slide, 10);
+      const outerTop = hOuter.getBoundingClientRect().top + window.scrollY;
+      const maxScroll = hOuter.offsetHeight - window.innerHeight;
+      const targetScroll = outerTop + (slideIdx / (numSlides - 1)) * maxScroll;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    });
+  });
+
+  /* ── SCROLL PROGRESS + H-SCROLL ── */
   function updateProgress() {
     const d = document.documentElement.scrollHeight - window.innerHeight;
     progressBar.style.width = (d > 0 ? (window.scrollY / d) * 100 : 0) + '%';
   }
 
-  function updateChapter(idx) {
-    activeChapter = idx;
-    const c = chapters[idx], prev = chapters[idx-1], next = chapters[idx+1];
-    pillNum.textContent  = c.num;
-    pillName.textContent = c.name;
-
-    if (prev) { pillPrev.textContent = prev.num + ' ' + prev.name; pillPrev.classList.add('visible'); arrowLeft.style.display = ''; }
-    else       { pillPrev.textContent = ''; pillPrev.classList.remove('visible'); arrowLeft.style.display = 'none'; }
-
-    if (next) { pillNext.textContent = next.num + ' ' + next.name; pillNext.classList.add('visible'); arrowRight.style.display = ''; }
-    else       { pillNext.textContent = ''; pillNext.classList.remove('visible'); arrowRight.style.display = 'none'; }
-
-    menuItems.forEach((item, i) => item.classList.toggle('active', i === idx));
-  }
-
-  function openMenu()  { menuOpen = true;  menu.classList.add('open');    pill.setAttribute('aria-expanded','true'); }
-  function closeMenu() { menuOpen = false; menu.classList.remove('open'); pill.setAttribute('aria-expanded','false'); }
-
-  pill.addEventListener('click', e => { e.stopPropagation(); menuOpen ? closeMenu() : openMenu(); });
-  pill.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); menuOpen ? closeMenu() : openMenu(); } });
-  document.addEventListener('click', () => { if (menuOpen) closeMenu(); });
-  menu.addEventListener('click', e => e.stopPropagation());
-
-  menuItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const t = document.getElementById(item.dataset.target);
-      if (t) t.scrollIntoView({ behavior: 'smooth' });
-      closeMenu();
-    });
-    item.addEventListener('keydown', e => { if (e.key==='Enter') item.click(); });
-  });
-
-  /* Section observer for chapter tracking */
-  const secObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const idx = chapters.findIndex(c => c.id === e.target.id);
-        if (idx !== -1) updateChapter(idx);
-      }
-    });
-  }, { threshold: 0.3 });
-  chapters.forEach(c => { const el = document.getElementById(c.id); if (el) secObs.observe(el); });
-
-  /* Reveal on scroll */
-  const revObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
-
-  /* Scroll handler */
   let raf = false;
   window.addEventListener('scroll', () => {
-    if (!raf) { raf = true; requestAnimationFrame(() => { updateProgress(); raf = false; }); }
+    if (!raf) {
+      raf = true;
+      requestAnimationFrame(() => {
+        updateProgress();
+        updateHScroll();
+        raf = false;
+      });
+    }
   }, { passive: true });
 
+  window.addEventListener('resize', () => { initHScroll(); updateHScroll(); }, { passive: true });
+
+  /* ── INIT ── */
   updateProgress();
   updateChapter(0);
+  initHScroll();
+
 })();
 </script>
 </body>
