@@ -668,20 +668,21 @@
 
     /* ── Iteration photo grid ── */
     .iter-grid {
-      columns: 4;
-      column-gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
       width: 100%;
     }
 
     .iter-item {
-      break-inside: avoid;
       border-radius: var(--radius-lg);
       overflow: hidden;
       background: var(--lavender);
-      margin-bottom: 12px;
+      aspect-ratio: 4/3;
     }
     .iter-item img {
-      width: 100%; height: auto;
+      width: 100%; height: 100%;
+      object-fit: cover;
       display: block;
       transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
     }
@@ -691,7 +692,7 @@
 
     @media (max-width: 767px) {
       .iter-grid {
-        columns: 2;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .iter-main { /* reset */ }
     }
@@ -1257,7 +1258,7 @@
     /* ── Desktop ── */
     @media (min-width: 1024px) {
       .container { max-width: 1120px; padding: 0 24px; }
-      .iter-grid { columns: 4; }
+      .iter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .dash-showcase { min-height: 760px; }
       .dash-center { width: 62%; }
     }
@@ -1270,7 +1271,7 @@
       .ref-grid, .next-grid, .eval-grid, .results-grid, .donut-grid { grid-template-columns: repeat(2, 1fr); }
       .feat-grid, .sol-feat-layout, .solve-layout { grid-template-columns: 1fr; }
       .solve-images { position: relative; top: auto; }
-      .iter-grid { columns: 3; }
+      .iter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .hero-dark { padding: 40px 24px 90px; }
       .footer-grid { grid-template-columns: 1fr; text-align: center; }
       .footer-links { justify-content: center; }
@@ -1313,7 +1314,7 @@
       .hmw-q { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 40px; }
       .quote-card { width: 82vw; }
       .i-card { width: 80vw; }
-      .iter-grid { columns: 2; }
+      .iter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
       .sol-h2 { font-size: clamp(28px, 8vw, 44px); }
       .solve-images { position: relative; top: auto; }
