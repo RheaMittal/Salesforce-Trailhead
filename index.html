@@ -57,7 +57,7 @@
     }
     h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
     a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
+    img { display: block; max-width: 100%; height: auto; }
     button { cursor: pointer; border: none; font-family: inherit; background: none; }
 
     .container {
@@ -336,10 +336,10 @@
     /* Illustrated landscape background */
     .hero-mountains {
       position: absolute; bottom: 0; left: 0; right: 0;
-      height: 55%; pointer-events: none; z-index: 0;
-      background: url('assets/mascots/Banner BG.jpeg') bottom center / cover no-repeat;
-      mask-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+      height: 38%; pointer-events: none; z-index: 0;
+      background: url('assets/mascots/bg.png') bottom center / cover no-repeat;
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
     }
 
     .scroll-chevron {
@@ -426,12 +426,9 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
       background: var(--lavender);
-      aspect-ratio: 4/3;
-      display: flex; align-items: center; justify-content: center;
     }
     .mascot-img-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
+      width: 100%; height: auto;
       display: block;
     }
 
@@ -550,8 +547,9 @@
       width: 160px; flex-shrink: 0;
     }
     .research-intro-mascot img {
-      width: 100%; border-radius: var(--radius-lg);
-      object-fit: cover;
+      width: 100%; height: auto;
+      border-radius: var(--radius-lg);
+      display: block;
     }
     .research-intro-h {
       font-family: 'Montserrat', sans-serif; font-weight: 800;
@@ -678,11 +676,9 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
       background: var(--lavender);
-      aspect-ratio: 4/3;
     }
     .iter-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
+      width: 100%; height: auto;
       display: block;
       transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
     }
@@ -1134,7 +1130,7 @@
 
     @media (max-width: 767px) {
       .fit-grid { grid-template-columns: 1fr; gap: 32px; }
-      .fit-img-col { aspect-ratio: 4/3; }
+      .fit-img-col { aspect-ratio: unset; }
     }
 
     /* ============================================================
@@ -1550,7 +1546,7 @@
   <div class="container">
     <p class="s-label reveal">Ideation</p>
     <h2 class="s-h2 reveal stagger-1">From constraints to concepts</h2>
-    <p class="s-body reveal stagger-2">Ideation began with five engagement requirement areas: post-milestone engagement, career visibility, habit-forming systems, community integration, and real-world problem solving. We used these as constraints - not prompts - to find the smallest intervention that would create a genuine reason to return.</p>
+    <p class="s-body reveal stagger-2" style="max-width:100%;">Ideation began with five engagement requirement areas: post-milestone engagement, career visibility, habit-forming systems, community integration, and real-world problem solving. We used these as constraints - not prompts - to find the smallest intervention that would create a genuine reason to return.</p>
 
     <div class="iter-grid reveal stagger-3">
       <!-- Col 1 — large, spans full height -->
@@ -1602,7 +1598,7 @@
 
     <!-- ── Feature 01: Trailhead Solve ── -->
     <div class="sol-feature reveal">
-      <p class="sol-feat-lbl"><span class="sol-feat-badge">01</span> Solution One</p>
+      <p class="sol-feat-lbl"><span class="sol-feat-badge">01</span> Solution 1</p>
       <h3 class="sol-feat-title">Trailhead Solve</h3>
 
       <p class="sol-feat-body">An AI-powered workspace where expert users describe a real Salesforce problem in plain language and get a structured, expert answer calibrated to their certification level and Salesforce release. Includes an expertise depth toggle, version-specific flagging, and a one-click community escalation path.</p>
@@ -1643,7 +1639,7 @@
 
     <!-- ── Feature 02: Personalised Dashboard ── -->
     <div class="sol-feature reveal">
-      <p class="sol-feat-lbl"><span class="sol-feat-badge">02</span> Solution Two</p>
+      <p class="sol-feat-lbl"><span class="sol-feat-badge">02</span> Solution 2</p>
       <h3 class="sol-feat-title">Personalised Dashboard</h3>
 
       <p class="sol-feat-body">An adaptive career layer that tells you what changed, where you stand, and what to do next. One personalised action per visit, tied to certifications, recent Solve sessions, and Salesforce release changes. Each visit becomes more valuable than the last.</p>
@@ -1723,9 +1719,16 @@
 ============================================================ -->
 <section id="testing">
   <div class="container">
-    <p class="s-label reveal">Testing &amp; Impact</p>
-    <h2 class="s-h2 reveal stagger-1">Did it work?</h2>
-    <p class="s-body reveal stagger-2">We were not measuring task completion speed - we were measuring whether the product creates a new motivation to learn.</p>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px;">
+      <div>
+        <p class="s-label reveal">Testing &amp; Impact</p>
+        <h2 class="s-h2 reveal stagger-1">Did it work?</h2>
+        <p class="s-body reveal stagger-2" style="max-width:560px;">We were not measuring task completion speed - we were measuring whether the product creates a new motivation to learn.</p>
+      </div>
+      <img src="assets/mascots/Blog-ContextualDrivers-336x360-AstroCodey.png"
+           alt="Astro and Codey mascots"
+           style="width:clamp(100px,12vw,160px);height:auto;flex-shrink:0;margin-top:8px;" />
+    </div>
 
     <div class="eval-grid">
       <div class="eval-card reveal stagger-1">
@@ -1761,6 +1764,26 @@
       <div class="ref-card reveal stagger-1"><h3>What worked</h3><p>Focusing on power users who had already arrived gave every design decision a clear test. If a feature could apply to a beginner, it was wrong. That constraint produced sharper work than any open-ended prompt could have.</p></div>
       <div class="ref-card reveal stagger-2"><h3>What was hard</h3><p>Recruiting authentic power users within a semester timeline is genuinely difficult. These are full-time professionals across five time zones who have no particular reason to give a student team 30 minutes.</p></div>
       <div class="ref-card reveal stagger-3"><h3>What we'd do next</h3><p>Scale testing globally with certified professionals. Refine Solve answer quality using structured feedback loops. Pitch an integration roadmap to Salesforce Trailhead's product team.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DEMO VIDEO
+============================================================ -->
+<section id="demo-video" style="background:#fff; padding:80px 0;">
+  <div class="container">
+    <p class="s-label reveal">Demo</p>
+    <h2 class="s-h2 reveal stagger-1">See it in action</h2>
+    <div class="reveal stagger-2" style="position:relative; width:100%; padding-top:56.25%; border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 16px 48px rgba(20,25,82,0.15);">
+      <iframe
+        src="https://www.youtube.com/embed/N9LtHmaBKDQ"
+        title="Trailhead Solve & Personalised Dashboard Demo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute; inset:0; width:100%; height:100%;">
+      </iframe>
     </div>
   </div>
 </section>
