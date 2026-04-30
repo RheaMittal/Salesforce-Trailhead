@@ -735,11 +735,12 @@
     .dash-showcase {
       position: relative;
       display: grid;
-      grid-template-columns: 28% 1fr 28%;
+      grid-template-columns: minmax(200px, 0.9fr) minmax(420px, 1.45fr) minmax(200px, 0.9fr);
       grid-template-rows: auto auto;
       gap: 0;
-      margin-top: 40px;
+      margin-top: 44px;
       align-items: start;
+      min-height: 760px;
     }
     .dash-center {
       grid-column: 1 / 4;
@@ -749,7 +750,7 @@
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.10);
       margin: 0 auto;
-      width: 58%;
+      width: 62%;
       position: relative;
       z-index: 1;
     }
@@ -765,15 +766,17 @@
       grid-column: 1 / 2;
       grid-row: 1 / 2;
       align-self: start;
-      padding-top: 60px;
-      padding-right: 16px;
+      padding-top: 84px;
+      padding-right: 18px;
+      transform: translateX(42px);
     }
     .dash-callout-right {
       grid-column: 3 / 4;
       grid-row: 2 / 3;
       align-self: end;
-      padding-bottom: 60px;
-      padding-left: 16px;
+      padding-bottom: 78px;
+      padding-left: 18px;
+      transform: translateX(-56px);
     }
     .dash-callout-img {
       border-radius: var(--radius);
@@ -793,9 +796,47 @@
     }
     .dash-callout-caption {
       font-family: 'Josefin Sans', sans-serif;
-      font-size: 13px; line-height: 1.6;
-      color: rgba(255,255,255,0.55);
-      font-style: italic;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #374151;
+      background: var(--sky-bg);
+      border: 1px solid rgba(1,118,211,0.2);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 6px 20px rgba(20,25,82,0.16);
+      font-style: normal;
+    }
+    .dash-callout-left .dash-callout-img { width: clamp(280px, 28vw, 360px); }
+    .dash-callout-right .dash-callout-img { width: clamp(350px, 36vw, 500px); }
+    .dash-callout-left .dash-callout-caption { max-width: clamp(280px, 28vw, 360px); }
+    .dash-callout-right .dash-callout-caption { max-width: clamp(350px, 36vw, 500px); }
+
+    @media (max-width: 1023px) {
+      .dash-showcase {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 20px;
+      }
+      .dash-center {
+        grid-column: 1 / 2;
+        grid-row: auto;
+        width: 100%;
+      }
+      .dash-callout-left,
+      .dash-callout-right {
+        grid-column: 1 / 2;
+        grid-row: auto;
+        padding: 0;
+        transform: none;
+      }
+      .dash-callout-left .dash-callout-img,
+      .dash-callout-right .dash-callout-img,
+      .dash-callout-left .dash-callout-caption,
+      .dash-callout-right .dash-callout-caption {
+        width: 100%;
+        max-width: none;
+      }
     }
 
     @media (max-width: 767px) {
@@ -1207,21 +1248,46 @@
     .stagger-7 { transition-delay: 0.56s; }
 
     /* ============================================================
-       RESPONSIVE
+       RESPONSIVE BREAKPOINT SYSTEM
+       Desktop: >= 1024px
+       Tablet:  768px - 1023px
+       Mobile:  <= 767px
     ============================================================ */
+
+    /* ── Desktop ── */
+    @media (min-width: 1024px) {
+      .container { max-width: 1120px; padding: 0 24px; }
+      .iter-grid { columns: 4; }
+      .dash-showcase { min-height: 760px; }
+      .dash-center { width: 62%; }
+    }
+
+    /* ── Tablet ── */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .container { padding: 0 20px; }
+      .proj-meta-row { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .proj-content-grid, .problem-cols, .fit-grid { grid-template-columns: 1fr; gap: 36px; }
+      .ref-grid, .next-grid, .eval-grid, .results-grid, .donut-grid { grid-template-columns: repeat(2, 1fr); }
+      .feat-grid, .sol-feat-layout, .solve-layout { grid-template-columns: 1fr; }
+      .solve-images { position: relative; top: auto; }
+      .iter-grid { columns: 3; }
+      .hero-dark { padding: 40px 24px 90px; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+
+    /* ── Mobile ── */
     @media (max-width: 767px) {
-      /* ── Grids → single column ── */
+      .container { padding: 0 16px; }
+      section { padding-left: 0; padding-right: 0; }
+
       .mascot-row, .donut-grid, .eval-grid,
       .results-grid, .ref-grid, .next-grid,
-      .feat-grid { grid-template-columns: 1fr; }
+      .feat-grid, .sol-feat-layout, .solve-layout,
+      .fit-grid, .problem-cols { grid-template-columns: 1fr; }
 
-      /* ── Overview meta row → 2 columns on mobile ── */
       .proj-meta-row { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-
-      /* ── Overview content + mascot → stack ── */
       .proj-content-grid { grid-template-columns: 1fr; gap: 32px; }
-
-      /* ── Overview 3-col (What is Trailhead / Product Scope / mascot) → stack ── */
       .proj-context-grid {
         display: flex !important;
         flex-direction: column !important;
@@ -1232,62 +1298,31 @@
         align-self: center !important;
       }
 
-      /* ── Stats bar → stack ── */
       .stats-bar { grid-template-columns: 1fr; }
       .stat-blk { border-right: none; border-bottom: 1px solid var(--border); }
       .stat-blk:last-child { border-bottom: none; }
+      .stat-n { font-size: clamp(40px, 14vw, 64px); }
 
-      /* ── Research intro → stack ── */
       .research-intro { grid-template-columns: 1fr; gap: 24px; }
       .research-intro-mascot { width: 100px; margin: 0 auto; }
 
-      /* ── Stat numbers ── */
-      .stat-n { font-size: clamp(40px, 14vw, 64px); }
-
-      /* ── Hero text ── */
       .hero-h1 { font-size: clamp(24px, 7vw, 36px); }
       .hero-dark { padding: 36px 20px 80px; }
-
-      /* ── Hero image ── */
       .hero-mockup-wrap { padding: 0 12px; }
 
-      /* ── HMW heading ── */
       .hmw-q { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 40px; }
-
-      /* ── Quote cards ── */
       .quote-card { width: 82vw; }
-
-      /* ── Insight cards ── */
       .i-card { width: 80vw; }
+      .iter-grid { columns: 2; }
 
-      /* ── Ideation gallery ── */
-      .ig-pair { grid-template-columns: 1fr; }
-      .ig-main { aspect-ratio: 4/3; }
-
-      /* ── Solutions ── */
       .sol-h2 { font-size: clamp(28px, 8vw, 44px); }
-      .solve-layout { grid-template-columns: 1fr; }
       .solve-images { position: relative; top: auto; }
 
-      /* ── Footer ── */
       .footer-grid { grid-template-columns: 1fr; text-align: center; }
       .footer-links { justify-content: center; }
 
-      /* ── Chapter pill ── */
       .pill-prev, .pill-next { display: none; }
       #pill-arrow-left, #pill-arrow-right { display: none !important; }
-
-      /* ── General container padding ── */
-      .container { padding: 0 16px; }
-      section { padding-left: 0; padding-right: 0; }
-    }
-
-    /* ── Tablet breakpoint ── */
-    @media (min-width: 768px) and (max-width: 1023px) {
-      .proj-meta-row { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-      .ref-grid { grid-template-columns: repeat(2, 1fr); }
-      .next-grid { grid-template-columns: repeat(2, 1fr); }
-      .feat-grid { grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
     }
   </style>
 </head>
@@ -1625,7 +1660,7 @@
 
         <!-- Full-page screenshot — centre column, spans both rows -->
         <div class="dash-center">
-          <img src="assets/screenshots/image 100.png" alt="Personalised Dashboard full view" loading="lazy" />
+          <img src="assets/screenshots/screencapture-localhost-5174-2026-04-28-16_43_13.png" alt="Personalised Dashboard full view" loading="lazy" />
         </div>
 
         <!-- Callout 2 — bottom right -->
