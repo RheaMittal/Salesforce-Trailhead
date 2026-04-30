@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Designing Adaptive Engagement — IUI × Salesforce Trailhead</title>
+  <title>Designing Adaptive Engagement - IUI × Salesforce Trailhead</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!--
     Fonts:
     · Montserrat  → headings / titles (as requested)
-    · Josefin Sans → body text (closest Google Fonts match to ITC Avant Garde Gothic —
+    · Josefin Sans → body text (closest Google Fonts match to ITC Avant Garde Gothic -
                      same geometric proportions. If you own ITC Avant Garde, add it via
                      @font-face and replace "Josefin Sans" below.)
   -->
@@ -159,15 +159,16 @@
     .hero-sky {
       width: 100%;
       background: linear-gradient(180deg, #CBE8F8 0%, #D9EEFA 55%, #B5D9F2 100%);
-      padding: 28px 24px 0;
+      padding: 48px 0 0;
       display: flex; flex-direction: column; align-items: center;
       position: relative; z-index: 1;
+      overflow: visible;
     }
 
-    /* Logo row — sits below hero h1, centered, no background */
+    /* Logo row - sits below hero h1, centered, no background */
     .hero-logos {
       display: flex; align-items: center; justify-content: center; gap: 16px;
-      margin-top: 20px; margin-bottom: 28px;
+      margin-top: 0; margin-bottom: 20px;
       opacity: 0;
       animation: fadeIn 0.6s ease-out 0.9s forwards;
     }
@@ -177,7 +178,7 @@
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
-    .logo-box img { height: 40px; width: auto; object-fit: contain; filter: brightness(0) invert(1); }
+    .logo-box img { height: 40px; width: auto; object-fit: contain; }
     .logo-x {
       font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: 18px; color: rgba(255,255,255,0.5);
@@ -188,14 +189,14 @@
       width: 100%; max-width: 1000px; margin: 0 auto;
       padding: 0 16px;
       position: relative; z-index: 2;
-      /* Entrance: slide up from below */
       opacity: 0;
-      transform: translateY(40px);
-      animation: mockupEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      transform: translateY(420px);
+      animation: mockupEntrance 1.5s cubic-bezier(0.22, 1.18, 0.48, 1) 0.3s forwards;
     }
 
     @keyframes mockupEntrance {
-      to { opacity: 1; transform: translateY(0); }
+      0%   { opacity: 1; transform: translateY(420px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     .hero-mockup-frame {
@@ -288,13 +289,13 @@
     /* ── Wave ── */
     .hero-wave {
       width: 100%; display: block; line-height: 0;
-      position: relative; z-index: 2; margin-top: -2px;
-      animation: fadeIn 0.5s ease-out 0.4s both;
+      position: relative; z-index: 10; margin-top: -1px; margin-bottom: -1px;
     }
 
     /* ── Dark content ── */
     .hero-dark {
-      width: 100%; position: relative; z-index: 1;
+      width: 100%; position: relative; z-index: 9;
+      background: var(--navy);
       display: flex; flex-direction: column; align-items: center; text-align: center;
       padding: 48px 24px 110px;
     }
@@ -332,10 +333,13 @@
     }
     .hero-cta:hover { background: var(--lavender); transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.3); }
 
-    /* Mountain silhouette */
+    /* Illustrated landscape background */
     .hero-mountains {
       position: absolute; bottom: 0; left: 0; right: 0;
-      height: 130px; pointer-events: none; z-index: 0;
+      height: 55%; pointer-events: none; z-index: 0;
+      background: url('assets/mascots/Banner BG.jpeg') bottom center / cover no-repeat;
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
     }
 
     .scroll-chevron {
@@ -350,15 +354,14 @@
     @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
 
     /* ============================================================
-       PROJECT OVERVIEW — combined meta + context (portfolio style)
+       PROJECT OVERVIEW - combined meta + context (portfolio style)
     ============================================================ */
     .proj-overview {
       background: #fff;
       padding: 72px 0 88px;
-      border-bottom: 1px solid var(--border);
     }
 
-    /* Meta row — 4 columns */
+    /* Meta row - 4 columns */
     .proj-meta-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -373,10 +376,10 @@
       color: #9CA3AF; /* light gray label */
     }
     .proj-meta-val {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 15px; font-weight: 700;
-      color: #111827; /* near-black value */
-      line-height: 1.5;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 15px; font-weight: 400;
+      color: #111827;
+      line-height: 1.6;
     }
 
     /* Thin divider */
@@ -411,7 +414,7 @@
     .proj-body-text {
       font-family: 'Josefin Sans', sans-serif;
       font-size: 16px; line-height: 1.8;
-      color: #6B7280; /* warm gray — never navy */
+      color: #6B7280; /* warm gray - never navy */
     }
 
     /* Mascot images */
@@ -451,21 +454,43 @@
     @media (max-width: 768px) {
       .proj-meta-row { grid-template-columns: repeat(2, 1fr); gap: 20px; }
       .proj-content-grid { grid-template-columns: 1fr; gap: 40px; }
+      .problem-cols { grid-template-columns: 1fr; gap: 32px; }
     }
 
     /* ============================================================
        RESEARCH / PROBLEM
     ============================================================ */
-    #research { background: #fff; padding: 80px 0 100px; border-top: 1px solid var(--border); }
+    #research { background: #fff; padding: 80px 0 100px; }
 
+    /* Problem two-column layout */
+    .problem-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
     .problem-lede {
       font-family: 'Montserrat', sans-serif; font-weight: 900;
-      font-size: clamp(26px, 3.8vw, 44px);
-      color: var(--text); line-height: 1.2; max-width: 680px; margin-bottom: 8px;
+      font-size: clamp(20px, 2.6vw, 32px);
+      color: var(--text); line-height: 1.25; margin-bottom: 20px;
     }
-    .problem-sub {
-      font-size: 15px; color: var(--muted); max-width: 520px;
-      margin-bottom: 48px; line-height: 1.6; font-family: 'Josefin Sans', sans-serif;
+    .problem-bullets {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .problem-bullets li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 15px; color: var(--muted); line-height: 1.55;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+    .problem-bullets li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      margin-top: 8px;
     }
 
     /* Engagement graph */
@@ -575,7 +600,7 @@
       text-align: center; font-style: italic;
     }
 
-    /* Insight cards — horizontal scroll carousel */
+    /* Insight cards - horizontal scroll carousel */
     .insight-carousel-wrap {
       margin: 0 -24px;
       padding: 0 24px;
@@ -641,18 +666,40 @@
       line-height: 1.7; margin-bottom: 40px; font-family: 'Josefin Sans', sans-serif;
     }
 
-    .ideation-gallery { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .ig-main { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-lg); overflow: hidden; background: var(--lavender); }
-    .ig-main img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-    .ig-main:hover img { transform: scale(1.03); }
-    .ig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .ig-pair-item { aspect-ratio: 4/3; border-radius: var(--radius-lg); overflow: hidden; background: var(--lavender); }
-    .ig-pair-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-    .ig-pair-item:hover img { transform: scale(1.04); }
+    /* ── Iteration photo grid ── */
+    .iter-grid {
+      columns: 4;
+      column-gap: 12px;
+      width: 100%;
+    }
+
+    .iter-item {
+      break-inside: avoid;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--lavender);
+      margin-bottom: 12px;
+    }
+    .iter-item img {
+      width: 100%; height: auto;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .iter-item:hover img { transform: scale(1.04); }
+
+    .iter-main { /* no special spanning needed in columns layout */ }
+
+    @media (max-width: 767px) {
+      .iter-grid {
+        columns: 2;
+      }
+      .iter-main { /* reset */ }
+    }
+
     .s-caption { text-align: center; font-size: 12px; color: var(--muted); margin-top: 10px; font-family: 'Josefin Sans', sans-serif; letter-spacing: 0.02em; }
 
     /* ============================================================
-       SOLUTIONS — normal dark section
+       SOLUTIONS - normal dark section
     ============================================================ */
     #solutions {
       background: var(--navy);
@@ -666,7 +713,7 @@
       margin: 0 auto 72px;
     }
 
-    /* Feature grid — 2 columns */
+    /* Feature grid - 2 columns */
     .feat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -678,11 +725,254 @@
       .feat-grid { grid-template-columns: 1fr; }
     }
 
-    /* Slide 0 — intro (kept for mobile compat reference) */
+    /* Slide 0 - intro (kept for mobile compat reference) */
     .h-slide-intro { flex-direction: column; justify-content: center; text-align: center; background: var(--navy); }
 
     .sol-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; font-family: 'Josefin Sans', sans-serif; }
-    .sol-h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(36px, 5.5vw, 68px); color: var(--orange); line-height: 1.0; margin-bottom: 12px; }
+    .sol-h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(36px, 5.5vw, 68px); color: #fff; line-height: 1.0; margin-bottom: 12px; }
+
+    /* ── Dashboard showcase layout ── */
+    .dash-showcase {
+      position: relative;
+      display: grid;
+      grid-template-columns: 28% 1fr 28%;
+      grid-template-rows: auto auto;
+      gap: 0;
+      margin-top: 40px;
+      align-items: start;
+    }
+    .dash-center {
+      grid-column: 1 / 4;
+      grid-row: 1 / 3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      margin: 0 auto;
+      width: 58%;
+      position: relative;
+      z-index: 1;
+    }
+    .dash-center img { width: 100%; display: block; }
+
+    .dash-callout {
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .dash-callout-left {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+      align-self: start;
+      padding-top: 60px;
+      padding-right: 16px;
+    }
+    .dash-callout-right {
+      grid-column: 3 / 4;
+      grid-row: 2 / 3;
+      align-self: end;
+      padding-bottom: 60px;
+      padding-left: 16px;
+    }
+    .dash-callout-img {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.13);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .dash-callout-img img { width: 100%; display: block; }
+    /* Placeholder if no image yet */
+    .dash-callout-img.ph {
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-family: 'Josefin Sans', sans-serif;
+      color: rgba(255,255,255,0.25); letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .dash-callout-caption {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 13px; line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+      font-style: italic;
+    }
+
+    @media (max-width: 767px) {
+      .dash-showcase {
+        display: flex; flex-direction: column; gap: 24px;
+      }
+      .dash-center { width: 100%; }
+      .dash-callout-left, .dash-callout-right { padding: 0; }
+    }
+
+    /* ── Per-feature block ── */
+    .sol-feature {
+      margin-bottom: 80px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sol-feature:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    /* Feature label row */
+    .sol-feat-lbl {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Josefin Sans', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 10px;
+    }
+    .sol-feat-badge {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(255,255,255,0.10);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 11px; color: #fff;
+    }
+    .sol-feat-title {
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: clamp(28px, 4vw, 48px); color: #fff;
+      line-height: 1.1; margin-bottom: 0;
+    }
+
+    /* Full-width body text below the title */
+    .sol-feat-body {
+      font-family: 'Josefin Sans', sans-serif; font-size: 16px;
+      line-height: 1.75; color: #374151;
+      margin: 16px 0 40px;
+      background: var(--sky-bg);
+      border: 1px solid rgba(1,118,211,0.18);
+      border-radius: var(--radius); padding: 20px 24px;
+    }
+
+    /* Two-column: screenshot left | steps right */
+    .sol-feat-layout {
+      display: grid;
+      grid-template-columns: 1fr 0.75fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .sol-feat-screens {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      position: relative;
+    }
+    .sol-carousel { position: relative; }
+    .sol-carousel-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .sol-carousel-track img {
+      width: 100%; flex-shrink: 0; display: block;
+    }
+    .sol-carousel-dots {
+      display: flex; justify-content: center; gap: 8px;
+      padding: 12px 0 8px;
+    }
+    .sol-carousel-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: none; cursor: pointer; padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .sol-carousel-dot.active {
+      background: var(--sky); transform: scale(1.3);
+    }
+    .sol-feat-steps-col { display: flex; flex-direction: column; gap: 14px; }
+    .sol-feat-how-h {
+      font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: clamp(16px, 1.8vw, 20px); color: #fff;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 767px) {
+      .sol-feat-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Quote cards (before HMW) ── */
+    .quote-row {
+      display: flex; gap: 16px; margin-bottom: 64px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; cursor: grab; padding-bottom: 8px;
+    }
+    .quote-row::-webkit-scrollbar { display: none; }
+    .quote-card {
+      flex-shrink: 0; width: clamp(260px, 28vw, 320px);
+      scroll-snap-align: start;
+      background: var(--sky-bg);
+      border: 1px solid rgba(1,118,211,0.18);
+      border-radius: var(--radius-lg); padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .quote-text {
+      font-family: 'Josefin Sans', sans-serif; font-style: italic;
+      font-size: 15px; line-height: 1.7;
+      color: #374151;
+      flex: 1;
+    }
+    .quote-text::before { content: '\201C'; }
+    .quote-text::after  { content: '\201D'; }
+    .quote-meta { border-top: 1px solid rgba(1,118,211,0.15); padding-top: 12px; }
+    .quote-name { display: block; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: #141952; }
+    .quote-role { display: block; font-family: 'Josefin Sans', sans-serif; font-size: 12px; color: #6B7280; margin-top: 2px; letter-spacing: 0.03em; }
+
+    /* ── Animated wave ── */
+    @keyframes waveDrift {
+      0%   { d: path('M0,0 C480,60 960,0 1440,60 L1440,60 L0,60 Z'); }
+      50%  { d: path('M0,20 C360,60 1080,0 1440,40 L1440,60 L0,60 Z'); }
+      100% { d: path('M0,0 C480,60 960,0 1440,60 L1440,60 L0,60 Z'); }
+    }
+    .wave-animated path { animation: waveDrift 7s ease-in-out infinite; }
+
+    /* ── Trailhead Solve step-highlight feature ── */
+    .solve-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: start; margin-bottom: 40px;
+    }
+    .solve-images { position: sticky; top: 100px; }
+    .solve-img-frame {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .solve-img-frame img {
+      width: 100%; display: block;
+      transition: opacity 0.4s ease;
+    }
+    .solve-steps { display: flex; flex-direction: column; gap: 16px; }
+    .solve-step {
+      padding: 24px; border-radius: var(--radius);
+      border: 1px solid rgba(1,118,211,0.18);
+      background: var(--sky-bg);
+      cursor: pointer;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
+    }
+    .solve-step:hover { background: #b8d9f0; transform: translateX(4px); }
+    .solve-step.active {
+      background: #b8d9f0;
+      border-color: rgba(1,118,211,0.45);
+      transform: translateX(4px);
+    }
+    .solve-step-num {
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 8px; display: block;
+    }
+    .solve-step-title {
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: 16px; color: #141952; margin-bottom: 6px;
+    }
+    .solve-step-body {
+      font-family: 'Josefin Sans', sans-serif; font-size: 14px;
+      color: #374151; line-height: 1.65;
+    }
+
+    @media (max-width: 768px) {
+      .solve-layout { grid-template-columns: 1fr; }
+      .solve-images { position: relative; top: auto; }
+      .quote-card { width: 80vw; }
+    }
     .sol-sub { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 560px; margin: 0 auto 40px; line-height: 1.65; font-family: 'Josefin Sans', sans-serif; }
 
     .scroll-hint {
@@ -694,20 +984,20 @@
     }
     @keyframes hintPulse { 0%,100%{opacity:0.35;transform:translateX(0)} 50%{opacity:0.7;transform:translateX(6px)} }
 
-    /* Slides 1 & 2 — feature cards */
+    /* Slides 1 & 2 - feature cards */
     .h-slide-feat { gap: 40px; justify-content: center; }
     .h-slide-feat .feat-inner { max-width: 880px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
 
-    /* Slide 3 — how it works */
+    /* Slide 3 - how it works */
     .h-slide-how { flex-direction: column; justify-content: center; }
 
     /* Feature card */
     .feat-card {
-      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11);
+      background: var(--sky-bg); border: 1px solid rgba(1,118,211,0.18);
       border-radius: var(--radius-lg); padding: 28px;
       transition: background var(--transition), border-color var(--transition), transform 0.3s ease;
     }
-    .feat-card:hover { background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.22); transform: translateY(-4px); }
+    .feat-card:hover { background: #b8d9f0; border-color: rgba(1,118,211,0.35); transform: translateY(-4px); }
 
     .feat-num-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
     .feat-badge {
@@ -719,9 +1009,9 @@
     .feat-num-lbl { font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'Josefin Sans', sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
     .feat-name { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(20px, 2.5vw, 26px); color: #fff; margin-bottom: 6px; }
     .feat-tagline { font-size: 13px; color: var(--sky); font-style: italic; margin-bottom: 12px; font-family: 'Josefin Sans', sans-serif; }
-    .feat-desc { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
+    .feat-desc { font-size: 13px; color: #374151; line-height: 1.7; font-family: 'Josefin Sans', sans-serif; }
 
-    /* Screenshot placeholder — swap with <img> when ready */
+    /* Screenshot placeholder - swap with <img> when ready */
     .scr-ph {
       aspect-ratio: 16/9; margin-top: 16px;
       background: rgba(255,255,255,0.04); border: 2px dashed rgba(255,255,255,0.13);
@@ -738,27 +1028,77 @@
     .how-h { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(20px, 2.5vw, 28px); color: #fff; margin-bottom: 22px; }
     .how-steps { display: flex; flex-direction: column; gap: 12px; }
     .how-step {
-      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.10);
+      background: var(--sky-bg); border: 1px solid rgba(1,118,211,0.18);
       border-radius: var(--radius); padding: 18px 22px;
       display: flex; align-items: flex-start; gap: 14px;
       transition: background var(--transition), transform 0.3s ease;
     }
-    .how-step:hover { background: rgba(255,255,255,0.12); transform: translateX(4px); }
+    .how-step:hover { background: #b8d9f0; transform: translateX(4px); }
     .step-badge {
       width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
-      background: var(--navy); border: 2px solid rgba(255,255,255,0.25);
+      background: var(--blue); border: none;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 13px; color: #fff;
     }
-    .step-txt { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.6; font-family: 'Josefin Sans', sans-serif; }
-    .step-txt strong { color: #fff; font-weight: 700; }
+    .step-txt { font-size: 14px; color: #374151; line-height: 1.6; font-family: 'Josefin Sans', sans-serif; }
+    .step-txt strong { color: #141952; font-weight: 700; }
 
-    /* (h-progress-dots and solutions-mobile removed — no longer used) */
+    /* (h-progress-dots and solutions-mobile removed - no longer used) */
+
+    /* ============================================================
+       FIT / CONTEXT SECTION
+    ============================================================ */
+    #fit {
+      background: var(--gray-bg);
+      padding: 88px 0;
+    }
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      margin-top: 40px;
+    }
+    .fit-text-col { display: flex; flex-direction: column; gap: 20px; }
+    .fit-body {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 16px; line-height: 1.8;
+      color: var(--muted);
+    }
+    .fit-body strong { color: var(--navy); font-weight: 700; }
+    .fit-point {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .fit-point-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--blue); flex-shrink: 0; margin-top: 7px;
+    }
+    .fit-point-txt {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 15px; line-height: 1.65; color: var(--text);
+    }
+    .fit-point-txt strong { color: var(--navy); }
+    .fit-img-col {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+    .fit-img-col img { width: 100%; height: auto; display: block; }
+
+    @media (max-width: 767px) {
+      .fit-grid { grid-template-columns: 1fr; gap: 32px; }
+      .fit-img-col { aspect-ratio: 4/3; }
+    }
 
     /* ============================================================
        TESTING
     ============================================================ */
-    #testing { background: #fff; padding: 80px 0; border-top: 1px solid var(--border); }
+    #testing { background: #fff; padding: 80px 0; }
 
     .eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 36px; }
     .eval-card {
@@ -846,8 +1186,8 @@
     /* ============================================================
        WAVE UTILITIES
     ============================================================ */
-    .wave-to-dark  { display: block; width: 100%; line-height: 0; }
-    .wave-to-light { display: block; width: 100%; line-height: 0; }
+    .wave-to-dark  { display: block; width: 100%; line-height: 0; margin-bottom: -1px; }
+    .wave-to-light { display: block; width: 100%; line-height: 0; margin-bottom: -1px; }
 
     /* ============================================================
        REVEAL ANIMATIONS
@@ -870,21 +1210,84 @@
        RESPONSIVE
     ============================================================ */
     @media (max-width: 767px) {
+      /* ── Grids → single column ── */
       .mascot-row, .donut-grid, .eval-grid,
-      .results-grid, .ref-grid, .next-grid { grid-template-columns: 1fr; }
-
+      .results-grid, .ref-grid, .next-grid,
       .feat-grid { grid-template-columns: 1fr; }
 
+      /* ── Overview meta row → 2 columns on mobile ── */
+      .proj-meta-row { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+      /* ── Overview content + mascot → stack ── */
+      .proj-content-grid { grid-template-columns: 1fr; gap: 32px; }
+
+      /* ── Overview 3-col (What is Trailhead / Product Scope / mascot) → stack ── */
+      .proj-context-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 32px !important;
+      }
+      .proj-context-grid > div[style*="width:140px"] {
+        width: 100px !important;
+        align-self: center !important;
+      }
+
+      /* ── Stats bar → stack ── */
       .stats-bar { grid-template-columns: 1fr; }
       .stat-blk { border-right: none; border-bottom: 1px solid var(--border); }
       .stat-blk:last-child { border-bottom: none; }
 
-      .footer-grid { grid-template-columns: 1fr; }
+      /* ── Research intro → stack ── */
+      .research-intro { grid-template-columns: 1fr; gap: 24px; }
+      .research-intro-mascot { width: 100px; margin: 0 auto; }
+
+      /* ── Stat numbers ── */
+      .stat-n { font-size: clamp(40px, 14vw, 64px); }
+
+      /* ── Hero text ── */
+      .hero-h1 { font-size: clamp(24px, 7vw, 36px); }
+      .hero-dark { padding: 36px 20px 80px; }
+
+      /* ── Hero image ── */
+      .hero-mockup-wrap { padding: 0 12px; }
+
+      /* ── HMW heading ── */
+      .hmw-q { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 40px; }
+
+      /* ── Quote cards ── */
+      .quote-card { width: 82vw; }
+
+      /* ── Insight cards ── */
+      .i-card { width: 80vw; }
+
+      /* ── Ideation gallery ── */
       .ig-pair { grid-template-columns: 1fr; }
+      .ig-main { aspect-ratio: 4/3; }
+
+      /* ── Solutions ── */
+      .sol-h2 { font-size: clamp(28px, 8vw, 44px); }
+      .solve-layout { grid-template-columns: 1fr; }
+      .solve-images { position: relative; top: auto; }
+
+      /* ── Footer ── */
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-links { justify-content: center; }
+
+      /* ── Chapter pill ── */
+      .pill-prev, .pill-next { display: none; }
+      #pill-arrow-left, #pill-arrow-right { display: none !important; }
+
+      /* ── General container padding ── */
+      .container { padding: 0 16px; }
+      section { padding-left: 0; padding-right: 0; }
     }
 
-    @media (min-width: 769px) and (max-width: 1023px) {
-      .next-grid { grid-template-columns: repeat(2,1fr); }
+    /* ── Tablet breakpoint ── */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .proj-meta-row { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .ref-grid { grid-template-columns: repeat(2, 1fr); }
+      .next-grid { grid-template-columns: repeat(2, 1fr); }
+      .feat-grid { grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
     }
   </style>
 </head>
@@ -920,9 +1323,9 @@
 
   <div class="hero-sky">
     <div class="hero-mockup-wrap">
-      <img src="assets/screenshots/Frame 2055250398.png"
-           alt="Trailhead Solve — How can I help, Jasmine?"
-           style="width:100%;max-width:960px;display:block;margin:0 auto;border-radius:24px;box-shadow:0 8px 80px rgba(20,25,82,0.40);" />
+      <img src="assets/screenshots/Realistic Tablet Screen UI Mockup.png"
+           alt="Trailhead Solve - Tablet Mockup"
+           style="width:100%;max-width:960px;display:block;margin:0 auto;" />
     </div>
   </div>
 
@@ -932,10 +1335,7 @@
   </svg>
 
   <div class="hero-dark">
-    <p class="hero-tag">Research-driven · Product Design · AI-powered</p>
-    <h1 class="hero-h1">Designing Adaptive Engagement for Evolving Learner Needs</h1>
-
-    <!-- Logos — centered below heading, white/inverted, no box bg -->
+    <!-- Logos - above tag line -->
     <div class="hero-logos">
       <div class="logo-box">
         <img src="assets/logos/Indiana_Hoosiers_logo.svg.png" alt="Indiana University Indianapolis" />
@@ -946,32 +1346,11 @@
       </div>
     </div>
 
-    <a href="#research" class="hero-cta">
-      Read the Case Study
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <p class="hero-tag">Research-driven · Product Design · AI-powered</p>
+    <h1 class="hero-h1">Designing Adaptive Engagement for Evolving Learner Needs</h1>
 
-    <svg class="hero-mountains" viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <polygon points="0,130 160,72 320,130" fill="#1e2680" opacity="0.5"/>
-      <polygon points="260,130 440,48 620,130" fill="#1e2680" opacity="0.45"/>
-      <polygon points="560,130 760,56 960,130" fill="#1e2680" opacity="0.5"/>
-      <polygon points="880,130 1080,44 1280,130" fill="#1e2680" opacity="0.45"/>
-      <polygon points="1200,130 1340,68 1440,130" fill="#1e2680" opacity="0.5"/>
-      <polygon points="0,130 200,86 400,130" fill="#111748"/>
-      <polygon points="320,130 540,60 760,130" fill="#0e1440"/>
-      <polygon points="680,130 900,72 1120,130" fill="#111748"/>
-      <polygon points="1020,130 1230,80 1440,130" fill="#0e1440"/>
-      <polygon points="60,130 68,108 76,130" fill="#0a1030"/>
-      <polygon points="64,118 72,100 80,118" fill="#0a1030"/>
-      <polygon points="140,130 149,104 158,130" fill="#0a1030"/>
-      <polygon points="145,116 154,96 163,116" fill="#0a1030"/>
-      <polygon points="380,130 389,106 398,130" fill="#0a1030"/>
-      <polygon points="700,130 709,108 718,130" fill="#0a1030"/>
-      <polygon points="1060,130 1070,104 1080,130" fill="#0a1030"/>
-      <polygon points="1340,130 1350,107 1360,130" fill="#0a1030"/>
-    </svg>
+
+    <div class="hero-mountains" aria-hidden="true"></div>
   </div>
 
   <div class="scroll-chevron" aria-hidden="true">
@@ -982,7 +1361,7 @@
 </section>
 
 <!-- ============================================================
-     PROJECT OVERVIEW — meta + context combined (portfolio style)
+     PROJECT OVERVIEW - meta + context combined (portfolio style)
 ============================================================ -->
 <section class="proj-overview">
   <div class="container">
@@ -991,7 +1370,7 @@
     <div class="proj-meta-row">
       <div class="proj-meta-item reveal">
         <span class="proj-meta-lbl">Timeline</span>
-        <span class="proj-meta-val">Aug 2025 – May 2026</span>
+        <span class="proj-meta-val">Aug 2025 - May 2026</span>
       </div>
       <div class="proj-meta-item reveal stagger-1">
         <span class="proj-meta-lbl">Client</span>
@@ -1009,27 +1388,20 @@
 
     <hr class="proj-divider" />
 
-    <!-- Two-column content: What is Trailhead | Product Scope -->
-    <div class="proj-content-grid">
+    <!-- Two-column content + side mascot -->
+    <div class="proj-context-grid" style="display:grid;grid-template-columns:1fr 1fr auto;gap:48px;align-items:start;">
       <div class="proj-col reveal stagger-1">
-        <span class="proj-col-lbl">What is Trailhead</span>
-        <h3 class="proj-col-title">A platform built for the climb.</h3>
+        <span class="proj-col-lbl">What is Trailhead?</span>
         <p class="proj-body-text">Salesforce Trailhead is a free learning platform used by millions of professionals to get certified and build careers in enterprise software. Through guided modules, hands-on challenges, and community forums, it takes beginners to certified experts.</p>
       </div>
       <div class="proj-col reveal stagger-2">
         <span class="proj-col-lbl">Product Scope</span>
-        <h3 class="proj-col-title">What happens after the climb?</h3>
-        <p class="proj-body-text">Over 10 months, our team partnered with the Salesforce Trailhead product team to research, design, and prototype new features for the platform's most experienced users — the power users who built their careers on Trailhead and then quietly stopped coming back.</p>
+        <p class="proj-body-text">Over 10 months, our team partnered with the Salesforce Trailhead product team to research, design, and prototype new features for the platform's most experienced users, the power users who built their careers on Trailhead and then quietly stopped coming back.</p>
       </div>
-    </div>
-
-    <!-- Mascot images -->
-    <div class="mascot-row reveal stagger-3">
-      <div class="mascot-img-wrap">
-        <img src="assets/mascots/astro.jpeg" alt="Astro — Salesforce mascot" />
-      </div>
-      <div class="mascot-img-wrap">
-        <img src="assets/mascots/images (1).jpeg" alt="Trailblazer mascot" />
+      <!-- Single mascot to the side -->
+      <div class="reveal stagger-3" style="width:140px;flex-shrink:0;align-self:flex-end;">
+        <img src="assets/mascots/images (1).jpeg" alt="Salesforce mascot"
+             style="width:100%;object-fit:contain;object-position:bottom;border-radius:12px;" />
       </div>
     </div>
 
@@ -1041,22 +1413,21 @@
 ============================================================ -->
 <section id="research">
   <div class="container">
-    <h2 class="problem-lede reveal">Trailhead was built for the climb, and not for what comes after.</h2>
-    <p class="problem-sub reveal stagger-1">As users become experts, Trailhead use shifts from continuous learning to occasional, task-driven engagement — until it stops entirely.</p>
-
-    <div class="graph-card reveal stagger-2">
-      <p class="graph-card-title">Engagement vs. Learner Journey</p>
-      <svg class="graph-svg" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg">
-        <line x1="48" y1="16" x2="48" y2="166" stroke="#CBD5E1" stroke-width="1.5"/>
-        <line x1="48" y1="166" x2="528" y2="166" stroke="#CBD5E1" stroke-width="1.5"/>
-        <text x="22" y="100" fill="#9096a1" font-size="10" font-family="Josefin Sans,sans-serif" transform="rotate(-90,22,100)" text-anchor="middle" letter-spacing="1">ENGAGEMENT</text>
-        <text x="288" y="188" fill="#9096a1" font-size="10" font-family="Josefin Sans,sans-serif" text-anchor="middle" letter-spacing="1">LEARNER JOURNEY</text>
-        <path d="M60,150 Q120,120 200,68 Q240,44 268,36" stroke="#0176D3" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <circle cx="268" cy="36" r="8" fill="#E8722A"/>
-        <text x="280" y="30" fill="#E8722A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">MILESTONE</text>
-        <path d="M268,36 Q340,80 440,132 Q480,150 516,158" stroke="#E8722A" stroke-width="2.5" fill="none" stroke-dasharray="8,5" stroke-linecap="round"/>
-        <text x="358" y="110" fill="#E8722A" font-size="9" font-family="Josefin Sans,sans-serif" font-style="italic">Expert users start disengaging here</text>
-      </svg>
+    <div class="problem-cols">
+      <!-- Left: heading + bullet points -->
+      <div class="problem-text-col">
+        <h2 class="problem-lede reveal">After completing a goal, the platform had no trigger to bring users back.</h2>
+        <ul class="problem-bullets reveal stagger-1">
+          <li>Once users become experts, the platform stops adapting to them and the content gets too basic.</li>
+          <li>There's no career direction or job-relevant skills path for advanced learners.</li>
+          <li>No way to get a fast answer to a real work problem.</li>
+        </ul>
+      </div>
+      <!-- Right: engagement graph -->
+      <div class="graph-card reveal stagger-2" style="padding:0;background:transparent;">
+        <img src="assets/screenshots/engagement.png" alt="Engagement vs. Learner Journey graph"
+             style="width:100%;display:block;border-radius:var(--radius-lg);" loading="lazy" />
+      </div>
     </div>
 
     <!-- User Research heading + mascot + stats (context before data) -->
@@ -1064,7 +1435,7 @@
       <div class="research-intro-text">
         <p class="s-label reveal">User Research</p>
         <h3 class="research-intro-h reveal stagger-1">We spoke directly with Trailhead's power users.</h3>
-        <p class="research-intro-body reveal stagger-2">To understand why expert users disengage, we conducted two rounds of semi-structured interviews with 11 power users across 5 regions — exploring their habits, frustrations, and what would actually bring them back.</p>
+        <p class="research-intro-body reveal stagger-2">To understand why expert users disengage, we conducted two rounds of semi-structured interviews with 11 power users across 5 regions - exploring their habits, frustrations, and what would actually bring them back.</p>
 
         <!-- Animated stat counters -->
         <div class="stats-bar reveal stagger-3">
@@ -1078,14 +1449,14 @@
           </div>
           <div class="stat-blk">
             <span class="stat-n" data-count="5">0</span>
-            <p class="stat-d">Regions — US, India, Canada, Europe, Middle East</p>
+            <p class="stat-d">Regions - US, India, Canada, Europe, Middle East</p>
           </div>
         </div>
       </div>
 
       <!-- Salesforce mascot -->
       <div class="research-intro-mascot reveal stagger-2">
-        <img src="assets/mascots/astro.jpeg" alt="Astro — Salesforce mascot" />
+        <img src="assets/mascots/astro.jpeg" alt="Astro - Salesforce mascot" />
       </div>
     </div>
 
@@ -1123,25 +1494,12 @@
 ============================================================ -->
 <section id="insights">
   <div class="container">
+
+    <!-- HMW question -->
     <p class="hmw-q reveal">"How might we drive advanced users to keep returning to Trailhead with deeper, relevant, and career-aligned experiences?"</p>
 
-    <!-- Drag-scroll hint -->
-    <p class="insight-drag-hint" aria-hidden="true">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Drag to explore
-    </p>
 
-    <div class="insight-carousel-wrap">
-      <div class="insight-grid" id="insight-carousel">
-        <div class="i-card"><div class="i-card-icon">🏆</div><p class="i-card-title">Certifications are the only universal motivator</p><p class="i-card-text">"Badges and the Ranger tag — not that much. Certifications do help."</p></div>
-        <div class="i-card"><div class="i-card-icon">📉</div><p class="i-card-title">Content gets shallow too fast</p><p class="i-card-text">"You learn in auto-roto mode, your brain does not work. Things are cookie cutter and too basic."</p></div>
-        <div class="i-card"><div class="i-card-icon">🔀</div><p class="i-card-title">The community has migrated away</p><p class="i-card-text">"On Trailhead you get a response in 48-72 hrs. On Slack you get it by afternoon."</p></div>
-        <div class="i-card"><div class="i-card-icon">🔔</div><p class="i-card-title">Usage is reactive, not habitual</p><p class="i-card-text">Users return only when triggered by a project or deadline — not from any pull the platform creates.</p></div>
-        <div class="i-card"><div class="i-card-icon">🤖</div><p class="i-card-title">Users supplement Trailhead without guilt</p><p class="i-card-text">Going to ChatGPT first and following Trailhead links it surfaces. Nobody apologised.</p></div>
-        <div class="i-card"><div class="i-card-icon">📈</div><p class="i-card-title">Contribution lifecycle the platform ignores</p><p class="i-card-text">Users move from consuming → answering → speaking at conferences. Trailhead only supports the first two.</p></div>
-      </div><!-- end insight-grid -->
-    </div><!-- end insight-carousel-wrap -->
-  </div><!-- end container -->
+  </div>
 </section>
 
 <!-- Wave back to white -->
@@ -1156,18 +1514,35 @@
   <div class="container">
     <p class="s-label reveal">Ideation</p>
     <h2 class="s-h2 reveal stagger-1">From constraints to concepts</h2>
-    <p class="s-body reveal stagger-2">Ideation began with five engagement requirement areas: post-milestone engagement, career visibility, habit-forming systems, community integration, and real-world problem solving. We used these as constraints — not prompts — to find the smallest intervention that would create a genuine reason to return.</p>
+    <p class="s-body reveal stagger-2">Ideation began with five engagement requirement areas: post-milestone engagement, career visibility, habit-forming systems, community integration, and real-world problem solving. We used these as constraints - not prompts - to find the smallest intervention that would create a genuine reason to return.</p>
 
-    <div class="ideation-gallery reveal stagger-3">
-      <div class="ig-main">
-        <img src="assets/screenshots/PHOTO-2025-11-24-15-00-30.jpg" alt="Team ideation session" loading="lazy" />
+    <div class="iter-grid reveal stagger-3">
+      <!-- Col 1 — large, spans full height -->
+      <div class="iter-item iter-main">
+        <img src="assets/screenshots/Iteration phase/iteration-whiteboard.jpg" alt="Whiteboard ideation session" loading="lazy" />
       </div>
-      <div class="ig-pair">
-        <div class="ig-pair-item"><img src="assets/screenshots/PHOTO-2025-11-24-15-00-30 2.jpg" alt="Whiteboard synthesis" loading="lazy" /></div>
-        <div class="ig-pair-item"><img src="assets/screenshots/PHOTO-2025-11-24-15-00-30 3.jpg" alt="Affinity mapping session" loading="lazy" /></div>
+      <!-- Col 2 — top -->
+      <div class="iter-item">
+        <img src="assets/screenshots/Iteration phase/iteration-team-01.jpg" alt="Team group photo" loading="lazy" />
+      </div>
+      <!-- Col 2 — bottom -->
+      <div class="iter-item">
+        <img src="assets/screenshots/Iteration phase/iteration-01.png" alt="Iteration sketch" loading="lazy" />
+      </div>
+      <!-- Col 3 — top -->
+      <div class="iter-item">
+        <img src="assets/screenshots/Iteration phase/iteration-02.png" alt="Concept iteration" loading="lazy" />
+      </div>
+      <!-- Col 4 — top -->
+      <div class="iter-item">
+        <img src="assets/screenshots/Iteration phase/iteration-03.png" alt="Iteration wireframe" loading="lazy" />
+      </div>
+      <!-- Col 4 — bottom -->
+      <div class="iter-item">
+        <img src="assets/screenshots/Iteration phase/iteration-04.png" alt="Iteration detail" loading="lazy" />
       </div>
     </div>
-    <p class="s-caption reveal">Team ideation sessions — whiteboard synthesis, affinity mapping, concept development</p>
+    <p class="s-caption reveal">Team ideation sessions: whiteboard synthesis, affinity mapping, concept development</p>
   </div>
 </section>
 
@@ -1182,49 +1557,85 @@
 <section id="solutions">
   <div class="container">
 
-    <!-- Intro -->
+    <!-- Section intro -->
     <div class="sol-intro reveal">
       <p class="sol-label">Solution</p>
       <h2 class="sol-h2">Reimagined<br/>Trailhead.</h2>
       <p class="sol-sub">Reimagined as an experience that builds real-world readiness, keeping expert users engaged beyond milestones.</p>
     </div>
 
-    <!-- Two feature cards side-by-side -->
-    <div class="feat-grid">
-      <div class="feat-card reveal stagger-1">
-        <div class="feat-num-row"><div class="feat-badge">1</div><span class="feat-num-lbl">Feature One</span></div>
-        <p class="feat-name">Trailhead Solve</p>
-        <p class="feat-tagline">An AI chatbot that answers real work questions and nudges users to trails.</p>
-        <p class="feat-desc">Describe a real Salesforce problem in plain language. Get a structured, expert answer calibrated to your certification level and Salesforce release — not a list of trails to complete. Includes expertise toggle, version-specific flagging, and a community escalation path.</p>
-        <img src="assets/screenshots/Frame 2055250411.png" alt="Trailhead Solve screen"
-             style="width:100%;border-radius:12px;margin-top:16px;" loading="lazy" />
-      </div>
-      <div class="feat-card reveal stagger-2">
-        <div class="feat-num-row"><div class="feat-badge">2</div><span class="feat-num-lbl">Feature Two</span></div>
-        <p class="feat-name">Adaptive Dashboard</p>
-        <p class="feat-tagline">A homepage that learns from you and tells you what to do next.</p>
-        <p class="feat-desc">An adaptive career layer that tells you what changed, where you stand, and what to do next. One personalised action — never a list — tied to certifications, recent Solve sessions, and release changes. Each visit becomes more valuable than the last.</p>
-        <img src="assets/screenshots/Frame 2055250416.png" alt="Adaptive Dashboard screen"
-             style="width:100%;border-radius:12px;margin-top:16px;" loading="lazy" />
+    <!-- ── Feature 01: Trailhead Solve ── -->
+    <div class="sol-feature reveal">
+      <p class="sol-feat-lbl"><span class="sol-feat-badge">01</span> Solution One</p>
+      <h3 class="sol-feat-title">Trailhead Solve</h3>
+
+      <p class="sol-feat-body">An AI-powered workspace where expert users describe a real Salesforce problem in plain language and get a structured, expert answer calibrated to their certification level and Salesforce release. Includes an expertise depth toggle, version-specific flagging, and a one-click community escalation path.</p>
+
+      <div class="sol-feat-layout">
+        <!-- Screenshot carousel -->
+        <div class="sol-feat-screens">
+          <div class="sol-carousel" id="solve-carousel">
+            <div class="sol-carousel-track" id="solve-track">
+              <img src="assets/screenshots/Solution 1 carousel image 1.png" alt="Trailhead Solve – screen 1" loading="lazy" />
+              <img src="assets/screenshots/Solution 1 carousel image 2.png" alt="Trailhead Solve – screen 2" loading="lazy" />
+              <img src="assets/screenshots/Solution 1 carousel image 3.png" alt="Trailhead Solve – screen 3" loading="lazy" />
+            </div>
+            <div class="sol-carousel-dots" id="solve-dots"></div>
+          </div>
+        </div>
+
+        <!-- How it works -->
+        <div class="sol-feat-steps-col">
+          <p class="sol-feat-how-h">How does it work?</p>
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="step-badge">1</div>
+              <p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base, calibrated to your expertise level.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-badge">2</div>
+              <p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional so you're never over-explained or underserved.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-badge">3</div>
+              <p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish, so you get an expert answer either way.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- How it works -->
-    <div class="how-wrap reveal stagger-3">
-      <p class="how-h">How does it work?</p>
-      <div class="how-steps">
-        <div class="how-step">
-          <div class="step-badge">1</div>
-          <p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base — calibrated to your expertise level.</p>
+    <!-- ── Feature 02: Personalised Dashboard ── -->
+    <div class="sol-feature reveal">
+      <p class="sol-feat-lbl"><span class="sol-feat-badge">02</span> Solution Two</p>
+      <h3 class="sol-feat-title">Personalised Dashboard</h3>
+
+      <p class="sol-feat-body">An adaptive career layer that tells you what changed, where you stand, and what to do next. One personalised action per visit, tied to certifications, recent Solve sessions, and Salesforce release changes. Each visit becomes more valuable than the last.</p>
+
+      <!-- Showcase: full-page screenshot centre + two detail callouts -->
+      <div class="dash-showcase">
+
+        <!-- Callout 1 — top left -->
+        <div class="dash-callout dash-callout-left">
+          <div class="dash-callout-img">
+            <img src="assets/screenshots/Trails recommended.png" alt="Trail recommendations" loading="lazy" />
+          </div>
+          <p class="dash-callout-caption">Trails recommended based on chats with Trailhead Solve.</p>
         </div>
-        <div class="how-step">
-          <div class="step-badge">2</div>
-          <p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional — so you're never over-explained or underserved.</p>
+
+        <!-- Full-page screenshot — centre column, spans both rows -->
+        <div class="dash-center">
+          <img src="assets/screenshots/image 100.png" alt="Personalised Dashboard full view" loading="lazy" />
         </div>
-        <div class="how-step">
-          <div class="step-badge">3</div>
-          <p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish — so you get an expert answer either way.</p>
+
+        <!-- Callout 2 — bottom right -->
+        <div class="dash-callout dash-callout-right">
+          <div class="dash-callout-img">
+            <img src="assets/screenshots/trending skills .png" alt="Trending skills" loading="lazy" />
+          </div>
+          <p class="dash-callout-caption">Agentforce identifies trending skills for a user's role, shows their current standing in the market, and enables them to generate custom Trailmixes to close skill gaps.</p>
         </div>
+
       </div>
     </div>
 
@@ -1237,13 +1648,48 @@
 </svg>
 
 <!-- ============================================================
+     FIT / CONTEXT
+============================================================ -->
+<section id="fit">
+  <div class="container">
+    <p class="s-label reveal">Context</p>
+    <h2 class="s-h2 reveal stagger-1" style="color:var(--navy);">Where does this solution fit in?</h2>
+
+    <div class="fit-grid">
+
+      <!-- Left: text -->
+      <div class="fit-text-col">
+        <div class="fit-point reveal stagger-2">
+          <div class="fit-point-dot"></div>
+          <p class="fit-point-txt"><strong>The engaged state.</strong> Users join Trailhead to learn: completing trails, earning badges, and working toward certifications. Engagement is high and the loop is clear.</p>
+        </div>
+        <div class="fit-point reveal stagger-3">
+          <div class="fit-point-dot"></div>
+          <p class="fit-point-txt"><strong>The drop-off.</strong> Once certified, users hit a wall. The content feels too basic, and when real work problems come up, they turn to ChatGPT, Google, or Slack instead of Trailhead.</p>
+        </div>
+        <div class="fit-point reveal stagger-4">
+          <div class="fit-point-dot"></div>
+          <p class="fit-point-txt"><strong>Closing the loop.</strong> Trailhead Solve brings experts back with accurate, Salesforce-backed answers to real problems. The Personalised Dashboard then nudges them toward relevant trails, turning a one-off visit into re-engagement.</p>
+        </div>
+      </div>
+
+      <!-- Right: context image -->
+      <div class="fit-img-col reveal stagger-3">
+        <img src="assets/screenshots/Where this solution fit.png" alt="Where this solution fits in" />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      TESTING
 ============================================================ -->
 <section id="testing">
   <div class="container">
     <p class="s-label reveal">Testing &amp; Impact</p>
     <h2 class="s-h2 reveal stagger-1">Did it work?</h2>
-    <p class="s-body reveal stagger-2">We were not measuring task completion speed — we were measuring whether the product creates a new motivation to learn.</p>
+    <p class="s-body reveal stagger-2">We were not measuring task completion speed - we were measuring whether the product creates a new motivation to learn.</p>
 
     <div class="eval-grid">
       <div class="eval-card reveal stagger-1">
@@ -1254,7 +1700,7 @@
       <div class="eval-card reveal stagger-2">
         <span class="eval-badge-tag">External</span>
         <h3>Moderated Think-Aloud Sessions</h3>
-        <p>8 Salesforce power users, ~30 minutes each. Where participants would normally use ChatGPT, we asked them to try Solve first — giving us a live substitution signal.</p>
+        <p>8 Salesforce power users, ~30 minutes each. Where participants would normally use ChatGPT, we asked them to try Solve first - giving us a live substitution signal.</p>
       </div>
     </div>
 
@@ -1265,12 +1711,6 @@
       <div class="res-card reveal stagger-4"><div class="res-num">6/8</div><p class="res-desc">Expressed unprompted return intent after the session</p></div>
     </div>
 
-    <p class="s-label reveal" style="margin-top:52px;margin-bottom:10px;">Implementation &amp; Next Steps</p>
-    <div class="next-grid">
-      <div class="next-card reveal stagger-1"><div class="next-icon">🚀</div><div><h4>Phase 1 — Trailhead Solve</h4><p>Launch the conversational problem-solving workspace. Refine answer depth based on structured user feedback.</p></div></div>
-      <div class="next-card reveal stagger-2"><div class="next-icon">🔗</div><div><h4>Phase 2 — Full Suite</h4><p>Introduce Knowledge Archive and Adaptive Career Dashboard, making every session more valuable than the last.</p></div></div>
-      <div class="next-card reveal stagger-3"><div class="next-icon">🌐</div><div><h4>Scale &amp; Pitch</h4><p>Scale testing globally with certified Salesforce professionals. Pitch integration roadmap to the product team.</p></div></div>
-    </div>
   </div>
 </section>
 
@@ -1305,13 +1745,12 @@
         <a href="https://soic.iupui.edu" target="_blank" rel="noopener" class="footer-link">IUI HCI Program ↗</a>
       </div>
     </div>
-    <!--
-      QR CODE — Replace .qr-ph with:
-        <img src="assets/qr-code.png" alt="Scan to visit site" style="width:140px;border-radius:12px;" />
-    -->
-    <div class="qr-ph">
-      <span style="font-size:28px;">⬛</span>
-      <span>assets/qr-code.png</span>
+    <!-- QR code - white SVG on dark navy footer -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <img src="assets/screenshots/CapstoneSalesforce.svg"
+           alt="Scan to visit the case study"
+           style="width:140px;height:140px;border-radius:12px;background:transparent;" />
+      <span style="font-size:11px;font-family:'Josefin Sans',sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);">Scan to visit</span>
     </div>
   </div>
   <p class="footer-copy">Designing Adaptive Engagement for Evolving Learner Needs · HCI Capstone 2026 · Indiana University Indianapolis × Salesforce Trailhead</p>
@@ -1482,6 +1921,40 @@
   /* ── INIT ── */
   updateProgress();
   updateChapter(0);
+
+  /* ── SOLVE CAROUSEL ── */
+  (function () {
+    const track = document.getElementById('solve-track');
+    const dotsWrap = document.getElementById('solve-dots');
+    if (!track || !dotsWrap) return;
+
+    const imgs = track.querySelectorAll('img');
+    let current = 0;
+    let timer;
+
+    imgs.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'sol-carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    function goTo(n) {
+      current = (n + imgs.length) % imgs.length;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dotsWrap.querySelectorAll('.sol-carousel-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current));
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    resetTimer();
+  })();
 
 })();
 </script>
