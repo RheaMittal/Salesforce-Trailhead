@@ -849,8 +849,6 @@
     .dash-callout-img {
       border-radius: var(--radius);
       overflow: hidden;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.13);
       box-shadow: 0 8px 32px rgba(0,0,0,0.35);
     }
     .dash-callout-img img { width: 100%; display: block; }
@@ -876,8 +874,8 @@
     }
     .dash-callout-left .dash-callout-img { width: clamp(280px, 28vw, 360px); }
     .dash-callout-right .dash-callout-img { width: clamp(350px, 36vw, 500px); }
-    .dash-callout-left .dash-callout-caption { max-width: clamp(280px, 28vw, 360px); }
-    .dash-callout-right .dash-callout-caption { max-width: clamp(350px, 36vw, 500px); }
+    .dash-callout-left .dash-callout-caption { width: clamp(280px, 28vw, 360px); }
+    .dash-callout-right .dash-callout-caption { width: clamp(350px, 36vw, 500px); }
 
     @media (max-width: 1023px) {
       .dash-showcase {
@@ -959,6 +957,53 @@
       gap: 32px;
       align-items: start;
     }
+    /* ── Solve image stack ── */
+    .solve-img-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .solve-img-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .solve-img-box {
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .solve-img-box img { width: 100%; display: block; }
+    .solve-img-caption {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      text-align: center;
+    }
+    /* ── How steps row ── */
+    .how-steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .how-step-card {
+      background: #fff;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .how-step-card .step-txt { color: #374151; }
+    @media (max-width: 767px) {
+      .how-steps-row { grid-template-columns: 1fr; }
+    }
+
     .sol-feat-screens {
       border-radius: var(--radius-lg);
       overflow: hidden;
@@ -1656,11 +1701,6 @@
         <p class="sel-dir-label">Selected Direction 01</p>
         <h3 class="sel-dir-title">Trailhead Solve</h3>
         <p class="sel-dir-body">An AI-powered workspace that answers real Salesforce problems in plain language. Addresses the "I just use ChatGPT" behavior by keeping expert knowledge inside the Trailhead ecosystem.</p>
-        <div class="sel-dir-img-grid">
-          <div class="sel-dir-img-item"><img src="assets/screenshots/Solution 1 carousel image 1.png" alt="Trailhead Solve screen 1" loading="lazy" /></div>
-          <div class="sel-dir-img-item"><img src="assets/screenshots/Solution 1 carousel image 2.png" alt="Trailhead Solve screen 2" loading="lazy" /></div>
-          <div class="sel-dir-img-item"><img src="assets/screenshots/Solution 1 carousel image 3.png" alt="Trailhead Solve screen 3" loading="lazy" /></div>
-        </div>
       </div>
 
       <!-- Direction 02 -->
@@ -1668,9 +1708,6 @@
         <p class="sel-dir-label">Selected Direction 02</p>
         <h3 class="sel-dir-title">Personalised Dashboard</h3>
         <p class="sel-dir-body">An adaptive career layer that shows what changed, where you stand, and what to do next. Creates a weekly visit habit instead of waiting for a new certification cycle.</p>
-        <div class="sel-dir-img-single">
-          <img src="assets/screenshots/Solution 2 main image.png" alt="Personalised Dashboard" loading="lazy" />
-        </div>
       </div>
 
     </div>
@@ -1702,36 +1739,42 @@
 
       <p class="sol-feat-body">An AI-powered workspace where expert users describe a real Salesforce problem in plain language and get a structured, expert answer calibrated to their certification level and Salesforce release. Includes an expertise depth toggle, version-specific flagging, and a one-click community escalation path.</p>
 
-      <div class="sol-feat-layout">
-        <!-- Screenshot carousel -->
-        <div class="sol-feat-screens">
-          <div class="sol-carousel" id="solve-carousel">
-            <div class="sol-carousel-track" id="solve-track">
-              <img src="assets/screenshots/Solution 1 carousel image 1.png" alt="Trailhead Solve – screen 1" loading="lazy" />
-              <img src="assets/screenshots/Solution 1 carousel image 2.png" alt="Trailhead Solve – screen 2" loading="lazy" />
-              <img src="assets/screenshots/Solution 1 carousel image 3.png" alt="Trailhead Solve – screen 3" loading="lazy" />
-            </div>
-            <div class="sol-carousel-dots" id="solve-dots"></div>
+      <!-- 3-image grid with captions -->
+      <div class="solve-img-grid">
+        <div class="solve-img-col">
+          <div class="solve-img-box">
+            <img src="assets/screenshots/Solution 1 carousel image 1.png" alt="Trailhead Solve – screen 1" loading="lazy" />
           </div>
+          <p class="solve-img-caption">Ask any Salesforce problem in plain language and get a structured expert answer.</p>
         </div>
-
-        <!-- How it works -->
-        <div class="sol-feat-steps-col">
-          <p class="sol-feat-how-h">How does it work?</p>
-          <div class="how-steps">
-            <div class="how-step">
-              <div class="step-badge">1</div>
-              <p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base, calibrated to your expertise level.</p>
-            </div>
-            <div class="how-step">
-              <div class="step-badge">2</div>
-              <p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional so you're never over-explained or underserved.</p>
-            </div>
-            <div class="how-step">
-              <div class="step-badge">3</div>
-              <p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish, so you get an expert answer either way.</p>
-            </div>
+        <div class="solve-img-col">
+          <div class="solve-img-box">
+            <img src="assets/screenshots/Solution 1 carousel image 2.png" alt="Trailhead Solve – screen 2" loading="lazy" />
           </div>
+          <p class="solve-img-caption">Toggle expertise depth — Novice, Intermediate, or Professional — for answers calibrated to your level.</p>
+        </div>
+        <div class="solve-img-col">
+          <div class="solve-img-box">
+            <img src="assets/screenshots/Solution 1 carousel image 3.png" alt="Trailhead Solve – screen 3" loading="lazy" />
+          </div>
+          <p class="solve-img-caption">Still stuck? Solve drafts a Trailblazer Community post pre-filled and ready to publish.</p>
+        </div>
+      </div>
+
+      <!-- How it works -->
+      <p class="sol-feat-how-h" style="margin-top:48px;">How does it work?</p>
+      <div class="how-steps-row">
+        <div class="how-step-card">
+          <div class="step-badge">1</div>
+          <p class="step-txt"><strong>Type your problem in plain language.</strong> Get a specific, actionable answer from Salesforce's full knowledge base, calibrated to your expertise level.</p>
+        </div>
+        <div class="how-step-card">
+          <div class="step-badge">2</div>
+          <p class="step-txt"><strong>Adjust the answer depth</strong> to Novice, Intermediate, or Professional so you're never over-explained or underserved.</p>
+        </div>
+        <div class="how-step-card">
+          <div class="step-badge">3</div>
+          <p class="step-txt"><strong>Still stuck?</strong> Solve drafts a Trailblazer Community post for you, pre-filled and ready to publish, so you get an expert answer either way.</p>
         </div>
       </div>
     </div>
